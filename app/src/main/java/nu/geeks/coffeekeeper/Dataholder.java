@@ -4,6 +4,7 @@ package nu.geeks.coffeekeeper;
  * Created by ramonicon
  */
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Dataholder {
     private int amountCoffe;
@@ -124,11 +125,17 @@ public class Dataholder {
 
 
 
-
-
 }
 
-
+class DataholderTimeComparator implements Comparator<Dataholder> {
+    public int compare(Dataholder d1,Dataholder d2){
+        t1=d1.getTotalTime();
+        t2=d2.getTotalTime();
+        if      (t1<t2) return-1;
+        else if (t1>t2) return 1;
+        else            return 0;
+    }
+}
 
 
 
