@@ -4,16 +4,24 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.VideoView;
 
 
 public class SplashScreen extends Activity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+
 
         //Simple timer to show splash screen for a few seconds, then start the main activity.
         CountDownTimer timer = new CountDownTimer(5000, 10) {
@@ -36,8 +44,11 @@ public class SplashScreen extends Activity {
      * Starts main activity.
      */
     private void startApplication(){
+
         Intent intent = new Intent(this, MainRecipeScreen.class);
+
         startActivity(intent);
+
     }
 
 
