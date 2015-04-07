@@ -45,8 +45,8 @@ public class SplashScreen extends Activity {
      */
     private void startApplication(){
 
-        Intent intent = new Intent(this, MainRecipeScreen.class);
-
+      //  Intent intent = new Intent(this, MainRecipeScreen.class);
+        Intent intent = new Intent(this, CreateRecipe.class);
         startActivity(intent);
 
     }

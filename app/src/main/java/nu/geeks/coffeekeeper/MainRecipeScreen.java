@@ -7,17 +7,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class MainRecipeScreen extends Activity {
 
     private Button bAddRecipe;
     private ListView listRecipes;
-    private Spinner sSort, sFilter;
+    private Spinner sSort;
+    private ArrayList<String> sortOptions;
+    private ArrayList<Dataholder> recipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,70 +38,51 @@ public class MainRecipeScreen extends Activity {
         bAddRecipe = (Button) findViewById(R.id.bNewRecipe);
         listRecipes = (ListView) findViewById(R.id.listRecipes);
         sSort = (Spinner) findViewById(R.id.sSort);
-        sFilter = (Spinner) findViewById(R.id.sFilter);
+        recipes = new ArrayList<Dataholder>();
 
-        SpinnerAdapter spinnerAdapter = new SpinnerAdapter() {
+        fillWithExampleRecipes();
 
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        sortOptions = new ArrayList<String>();
+        sortOptions.add("Sort by name");
+        sortOptions.add("Sort by brew time");
+        sortOptions.add("sort by coffee bean");
+        sortOptions.add("sort by favourites");
 
-                return null;
-            }
+        //Create and populate sorting dropdown menu
+        ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sortOptions);
+        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sSort.setAdapter(sortAdapter);
 
-            @Override
-            public void registerDataSetObserver(DataSetObserver observer) {
-
-            }
-
-            @Override
-            public void unregisterDataSetObserver(DataSetObserver observer) {
-
-            }
-
-            @Override
-            public int getCount() {
-                return 0;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public boolean hasStableIds() {
-                return false;
-            }
-
+        ArrayAdapter<Dataholder> recipeAdapter = new ArrayAdapter<Dataholder>(this, android.R.layout.simple_list_item_2,
+                android.R.id.text1, recipes){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                return null;
-            }
+                View view = super.getView(position, convertView, parent);
 
-            @Override
-            public int getItemViewType(int position) {
-                return 0;
-            }
+                TextView text1 = (TextView) findViewById(android.R.id.text1);
+                TextView text2 = (TextView) findViewById(android.R.id.text2);
 
-            @Override
-            public int getViewTypeCount() {
-                return 0;
-            }
+                //text1.setText(recipes.get(position).getName());
+                //text2.setText(recipes.get(position).getComment());
 
-            @Override
-            public boolean isEmpty() {
-                return false;
+                return super.getView(position, convertView, parent);
             }
-        }
+        };
+
     }
 
-
-
+    /**
+     * Fill list with dummy recipes. "ABC", "BCD", "CDE", and so on.
+     */
+    private void fillWithExampleRecipes() {
+        for(int i = 0; i < 15; i++){
+            String name = "" + (char) (65+i) + (char) (66+i) + (char) (67+i);
+            String comment = name;
+            Dataholder recipe = new Dataholder(name);
+           // recipe.setComment(comment);
+            recipes.add(recipe);
+        }
+    }
 
 
     //TODO - add menu buttons
