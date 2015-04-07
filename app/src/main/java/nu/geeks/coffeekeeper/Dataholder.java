@@ -1,12 +1,21 @@
+/************************************************************************
+ * This file contains a storageclass named 'Dataholder',
+ * also contains comparators, can compare on time and name.
+ ************************************************************************/
+
+
 package nu.geeks.coffeekeeper;
 
-/**
- * Created by ramonicon
- */
+/***********************************************************************
+ * Storage class, all fields are accesible by setters/getter functions
+ * Does no work on the data, returns copies of data, to make a change
+ * use appropriate set function
+ ***********************************************************************/
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Dataholder {
+    //all object fields
     private int amountCoffe;
     private int amountWater;
     private int grind;
@@ -127,6 +136,10 @@ public class Dataholder {
 
 }
 
+/*****************************************************************
+ *Quick->compares totaltime, -1for less, 0 for equal, 1 for greater
+ *takes both objects to be compared as arguments
+ *****************************************************************/
 class DataholderTimeComparator implements Comparator<Dataholder> {
     public int compare(Dataholder d1,Dataholder d2){
         t1=d1.getTotalTime();
@@ -135,6 +148,19 @@ class DataholderTimeComparator implements Comparator<Dataholder> {
         else if (t1>t2) return 1;
         else            return 0;
     }
+}
+/*****************************************************************
+ *Quick->  compares names, -1for less, 0 for equal, 1 for greater
+ *takes both objects to be compared as arguments
+ *****************************************************************/
+class DataholderNameComparator implements Comparator<Dataholder>{
+    public int compare(Dataholder d1,Dataholder d2){
+        name1=d1.getName();
+        name2=d2.getName();
+        int comp=name1.compareTo(name2);
+        return comp;
+    }
+
 }
 
 
