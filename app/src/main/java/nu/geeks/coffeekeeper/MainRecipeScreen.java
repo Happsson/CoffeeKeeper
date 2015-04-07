@@ -1,7 +1,6 @@
 package nu.geeks.coffeekeeper;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,15 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
 
-public class MainRecipieScreen extends Activity {
+public class MainRecipeScreen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_recipie_screen);
+        setContentView(R.layout.activity_main_recipe_screen);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -59,7 +57,7 @@ public class MainRecipieScreen extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main_recipie_screen, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_main_recipe_screen, container, false);
             return rootView;
         }
     }
