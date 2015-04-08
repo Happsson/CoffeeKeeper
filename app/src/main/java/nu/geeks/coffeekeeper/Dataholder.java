@@ -132,7 +132,10 @@ public class Dataholder {
         return new String(name);
     }
 
-
+    @Override
+    public String toString(){
+    return new String(name);
+    }
 
 }
 
