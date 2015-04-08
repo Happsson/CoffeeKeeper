@@ -84,11 +84,11 @@ public class Dataholder {
     }
 
     public void setComments(String comments){
-        this.comments=new String(comments);
+        this.comments=comments;
     }
 
     public void setName(String name){
-        this.name=new String(name);
+        this.name=name;
     }
 
     //get functions
@@ -142,8 +142,8 @@ public class Dataholder {
  *****************************************************************/
 class DataholderTimeComparator implements Comparator<Dataholder> {
     public int compare(Dataholder d1,Dataholder d2){
-        t1=d1.getTotalTime();
-        t2=d2.getTotalTime();
+        int t1=d1.getTotalTime();
+        int t2=d2.getTotalTime();
         if      (t1<t2) return-1;
         else if (t1>t2) return 1;
         else            return 0;
@@ -155,8 +155,8 @@ class DataholderTimeComparator implements Comparator<Dataholder> {
  *****************************************************************/
 class DataholderNameComparator implements Comparator<Dataholder>{
     public int compare(Dataholder d1,Dataholder d2){
-        name1=d1.getName();
-        name2=d2.getName();
+        String name1=d1.getName();
+        String name2=d2.getName();
         int comp=name1.compareTo(name2);
         return comp;
     }

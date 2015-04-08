@@ -1,4 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -6,12 +8,15 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="nu.geeks.coffeekeeper.CreateRecipe">
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true">
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,6 +45,20 @@
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/eComment"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Typ av kaffe"
+            android:id="@+id/tCoffeetype"
+            android:paddingTop="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eCoffeeType"
             android:layout_gravity="center_horizontal" />
 
         <TextView
@@ -104,16 +123,47 @@
             android:ems="10"
             android:id="@+id/eBrewTime"
             android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Temperatur"
+            android:id="@+id/tTemp"
+            android:paddingTop="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/eTemp"
+            android:layout_gravity="center_horizontal" />
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="178dp"
+            android:layout_gravity="right">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spara"
+                android:id="@+id/bSave"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Avbryt"
+                android:id="@+id/bCancel"
+                android:layout_alignTop="@+id/bSave"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Spara"
-        android:id="@+id/bSave"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+</ScrollView>
 
-</RelativeLayout>

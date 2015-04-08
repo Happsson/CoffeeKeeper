@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.VideoView;
 
 
@@ -21,8 +22,16 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+/*
+        ImageView bg = (ImageView) findViewById(R.id.splashImage);
 
-
+        bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startApplication();
+            }
+        });
+*/
         //Simple timer to show splash screen for a few seconds, then start the main activity.
         CountDownTimer timer = new CountDownTimer(5000, 10) {
             @Override
@@ -46,7 +55,7 @@ public class SplashScreen extends Activity {
     private void startApplication(){
 
       //  Intent intent = new Intent(this, MainRecipeScreen.class);
-        Intent intent = new Intent(this, CreateRecipe.class);
+        Intent intent = new Intent(this, MainRecipeScreen.class);
         startActivity(intent);
 
     }
