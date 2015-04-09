@@ -15,7 +15,7 @@ import android.widget.VideoView;
 
 public class SplashScreen extends Activity {
 
-
+    CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,13 @@ public class SplashScreen extends Activity {
         bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timer.cancel();
                 startApplication();
             }
         });
 
         //Simple timer to show splash screen for a few seconds, then start the main activity.
-        CountDownTimer timer = new CountDownTimer(5000, 10) {
+        timer = new CountDownTimer(5000, 10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 //do nothing

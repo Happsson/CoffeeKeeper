@@ -94,20 +94,6 @@ public class MainRecipeScreen extends Activity {
                 Dataholder newRecipe = new Dataholder();
                 String dataReceived = data.getStringExtra("ReturnData");
 
-
-
-                /* OLD SOLUTION
-                newRecipe.setName(dataReceived[0]);
-                newRecipe.setComments(dataReceived[1]);
-                newRecipe.setKindCoffe(dataReceived[2]);
-                newRecipe.setAmountCoffe(Integer.parseInt(dataReceived[3]));
-                newRecipe.setAmmountWater(Integer.parseInt(dataReceived[4]));
-                newRecipe.setBrewTime(1, Integer.parseInt(dataReceived[5])); //TODO - this should be able to take more than one time.
-                newRecipe.setGrind(Integer.parseInt(dataReceived[6]));
-                newRecipe.setTemp(Integer.parseInt(dataReceived[7]));
-
-                */
-
                 recipes.add(DataSaveAndRead.readRecipeString(dataReceived));
 
                 recipeAdapter.notifyDataSetChanged();

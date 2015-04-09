@@ -14,8 +14,8 @@ public class DataSaveAndRead {
     /**
      * Converts a recipeList to a String, to be saved on phone.
      * String will look like this:
-     *      "name€(name)€comment€(comment)€cType€(Coffee type)€cAmount€(Coffee amount)
-     *      €wAmount€(Water amount)€grind€(Grind setting)€bTime€(Brew time)€temp€(Temperature)"
+     *      "€(name)€€(comment)€€(Coffee type)€€(Coffee amount)
+     *      €€(Water amount)€€(Grind setting)€€(Brew time)€€(Temperature)"
      *
      *      where the 0 is the index. The same pattern will repeat with the next index.
      *      No spaces or new lines are used.
@@ -91,8 +91,8 @@ public class DataSaveAndRead {
         dataString += "€" + recipe.getAmountCoffe() + "€";
         dataString += "€" + recipe.getAmountWater() + "€";
         dataString += "€" + recipe.getGrind() + "€";
-        dataString += "€" + recipe.getBrewTime() + "€";
-        dataString += "€" + recipe.getTemp() + "%"; //note end sign, '%'
+        dataString += "€" + recipe.getBrewTime().get(0) + "€"; //TODO - again, need to be able to handle more times.
+        dataString += "€" + recipe.getTemp() + "€%"; //note end sign, '%'
 
         return dataString;
 
@@ -151,7 +151,11 @@ public class DataSaveAndRead {
                 recipe.setAmmountWater(Integer.parseInt(read));
                 break;
             case 5:
+
+
+
                 recipe.setGrind(Integer.parseInt(read));
+
                 break;
             case 6:
                 recipe.setBrewTime(0, Integer.parseInt(read)); //TODO - more than one brew time

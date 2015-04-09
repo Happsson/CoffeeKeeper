@@ -3,6 +3,7 @@ package nu.geeks.coffeekeeper;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,13 +61,15 @@ public class CreateRecipe extends Activity {
                     Toast.makeText(getApplicationContext(), "Fyll i alla fält!", Toast.LENGTH_LONG).show();
                 }else{
                     Dataholder recipe = new Dataholder();
-                    recipe.setTemp(Integer.parseInt(eTemp.toString()));
-                    recipe.setName(eName.toString());
-                    recipe.setKindCoffe(eCoffeeType.toString());
-                    recipe.setGrind(Integer.parseInt(eGrindAmount.toString()));
-                    recipe.setAmmountWater(Integer.parseInt(eWaterAmount.toString()));
-                    recipe.setAmountCoffe(Integer.parseInt(eCoffeAmount.toString()));
-                    recipe.setBrewTime(1,Integer.parseInt(eBrewtime.toString()));
+
+                    recipe.setTemp(Integer.parseInt(eTemp.getText().toString().trim()));
+                    recipe.setName(eName.getText().toString());
+                    recipe.setKindCoffe(eCoffeeType.getText().toString());
+                    recipe.setGrind(Integer.parseInt(eGrindAmount.getText().toString().trim()));
+                    recipe.setAmmountWater(Integer.parseInt(eWaterAmount.getText().toString().trim()));
+                    recipe.setAmountCoffe(Integer.parseInt(eCoffeAmount.getText().toString().trim()));
+                    recipe.setBrewTime(1,Integer.parseInt(eBrewtime.getText().toString().trim()));
+
 
                     //Check i user used symbol '€' or '%'. These are illegal, used as identifiers in parser.
                     String[] dataToSave = new String[8];
@@ -87,11 +90,13 @@ public class CreateRecipe extends Activity {
 
                     if(save) {
 
-                        String sendData = DataSaveAndRead.saveRecipe(recipe);
-                        
-                        //Save the data in an intent, to be catched by the main acticity when this exits.
+                       String sendData = DataSaveAndRead.saveRecipe(recipe);
+
+                        Log.d("TAG", sendData);
+                       //Save the data in an intent, to be catched by the main acticity when this exits.
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("ReturnData", sendData);
+
                         setResult(RESULT_OK, resultIntent);
                         finish();
                     }else {
