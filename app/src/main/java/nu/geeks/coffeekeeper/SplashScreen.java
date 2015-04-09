@@ -22,7 +22,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-/*
+
         ImageView bg = (ImageView) findViewById(R.id.splashImage);
 
         bg.setOnClickListener(new View.OnClickListener() {
@@ -31,7 +31,7 @@ public class SplashScreen extends Activity {
                 startApplication();
             }
         });
-*/
+
         //Simple timer to show splash screen for a few seconds, then start the main activity.
         CountDownTimer timer = new CountDownTimer(5000, 10) {
             @Override

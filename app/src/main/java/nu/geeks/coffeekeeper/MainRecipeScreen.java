@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,8 @@ public class MainRecipeScreen extends Activity {
     private ArrayList<String> sortOptions;
     private ArrayList<Dataholder> recipes;
     private ArrayAdapter<Dataholder> recipeAdapter;
+
+    private static final String TAG = MainRecipeScreen.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,9 @@ public class MainRecipeScreen extends Activity {
 
                 recipes.add(newRecipe);
 
+                recipeAdapter.notifyDataSetChanged();
+
+
                 Toast.makeText(getApplicationContext(), "Recept sparat!", Toast.LENGTH_LONG).show();
             }
         }
@@ -100,9 +106,13 @@ public class MainRecipeScreen extends Activity {
         sortOptions.add("sort by favourites");
 
         //Create and populate sorting dropdown menu
+
         ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sortOptions);
         sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sSort.setAdapter(sortAdapter);
+
+        Log.d(TAG, recipes.get(0).getName());
+        Log.d(TAG, recipes.get(0).getComments());
 
         recipeAdapter = new ArrayAdapter<Dataholder>(this, android.R.layout.simple_list_item_2,
                 android.R.id.text1, recipes){
@@ -111,15 +121,17 @@ public class MainRecipeScreen extends Activity {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
-                TextView text1 = (TextView) findViewById(android.R.id.text1);
-                TextView text2 = (TextView) findViewById(android.R.id.text2);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
 
                 text1.setText(recipes.get(position).getName());
                 text2.setText(recipes.get(position).getComments());
 
+
                 return view;
             }
         };
+
 
         listRecipes.setAdapter(recipeAdapter);
 
@@ -129,13 +141,17 @@ public class MainRecipeScreen extends Activity {
      * Fill list with dummy recipes. "ABC", "BCD", "CDE", and so on.
      */
     private void fillWithExampleRecipes() {
-        for(int i = 0; i < 15; i++){
-            String name = "" + (char) (65+i) + (char) (66+i) + (char) (67+i);
-            String comment = name;
-            Dataholder recipe = new Dataholder(name);
-            recipe.setComments(comment);
-            recipes.add(recipe);
-        }
+        Dataholder test = new Dataholder();
+        test.setAmmountWater(2);
+        test.setAmountCoffe(4);
+        test.setBrewTime(1,1);
+        test.setComments("Kommentar");
+        test.setGrind(3);
+        test.setKindCoffe("tjo");
+        test.setName("Kaffe1");
+        test.setTemp(4);
+
+        recipes.add(test);
     }
 
 
