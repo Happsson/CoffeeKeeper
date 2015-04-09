@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,6 +31,11 @@ public class MainRecipeScreen extends Activity {
     private ArrayList<Dataholder> recipes;
     private ArrayAdapter<Dataholder> recipeAdapter;
 
+    private final String[] SORTOPTIONS = {
+            "Sort by name",
+            "Sort by brew time"
+    };
+
     private static final String TAG = MainRecipeScreen.class.getSimpleName();
 
     @Override
@@ -39,9 +45,9 @@ public class MainRecipeScreen extends Activity {
 
         initializeView();
 
-
-
         initializeButton();
+
+
 
     }
 
@@ -55,6 +61,26 @@ public class MainRecipeScreen extends Activity {
 
             }
         });
+
+        sSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(sortOptions.get(position).equals(SORTOPTIONS[0])){ //SORTOPTION[0] == "Sort by name"
+                    recipeAdapter.sort(new DataholderNameComparator());
+                    recipeAdapter.notifyDataSetChanged();
+                }
+                if(sortOptions.get(position).equals(SORTOPTIONS[1])){ // Sort by brewtime
+                    recipeAdapter.sort(new DataholderTimeComparator());
+                    recipeAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void createRecipe() {
@@ -65,7 +91,7 @@ public class MainRecipeScreen extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == CREATE_RECIPE){
+        if(requestCode == CREATE_RECIPE){
             if(resultCode == RESULT_OK){
                 //Data recieved from CreateRecipe. Save it to recipies.
                 Dataholder newRecipe = new Dataholder();
@@ -100,10 +126,11 @@ public class MainRecipeScreen extends Activity {
         fillWithExampleRecipes();
 
         sortOptions = new ArrayList<String>();
-        sortOptions.add("Sort by name");
-        sortOptions.add("Sort by brew time");
-        sortOptions.add("sort by coffee bean");
-        sortOptions.add("sort by favourites");
+
+        //Add sortoptions
+        for(int i = 0; i < SORTOPTIONS.length; i++){
+            sortOptions.add(SORTOPTIONS[i]);
+        }
 
         //Create and populate sorting dropdown menu
 
