@@ -59,6 +59,21 @@ public class CreateRecipe extends Activity {
                         ) {
                     Toast.makeText(getApplicationContext(), "Fyll i alla fält!", Toast.LENGTH_LONG).show();
                 }else{
+
+                    /*
+
+                    Dataholder recipe = new Dataholder();
+                    recipe.setTemp(Integer.parseInt(eTemp.toString()));
+                    recipe.setName(eName.toString());
+                    recipe.setKindCoffe(eCoffeeType.toString());
+                    recipe.setGrind(Integer.parseInt(eGrindAmount.toString()));
+                    recipe.setAmmountWater(Integer.parseInt(eWaterAmount.toString()));
+                    recipe.setAmountCoffe(Integer.parseInt(eCoffeAmount.toString()));
+                    recipe.setBrewTime(1,Integer.parseInt(eBrewtime.toString()));
+
+                    GlobalRecipeList.getInstance().recipeList.add(recipe);
+
+                    */
                     //Dataholder data = new Dataholder();
                     String[] dataToSave = new String[8];
                     dataToSave[0] = eName.getText().toString();

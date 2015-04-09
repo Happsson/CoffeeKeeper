@@ -32,8 +32,8 @@ public class MainRecipeScreen extends Activity {
     private ArrayAdapter<Dataholder> recipeAdapter;
 
     private final String[] SORTOPTIONS = {
-            "Sort by name",
-            "Sort by brew time"
+            "Sortera efter namn",
+            "Sortera efter bryggtid"
     };
 
     private static final String TAG = MainRecipeScreen.class.getSimpleName();
@@ -42,13 +42,8 @@ public class MainRecipeScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recipe_screen);
-
         initializeView();
-
         initializeButton();
-
-
-
     }
 
     private void initializeButton() {
@@ -93,6 +88,8 @@ public class MainRecipeScreen extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == CREATE_RECIPE){
             if(resultCode == RESULT_OK){
+
+
                 //Data recieved from CreateRecipe. Save it to recipies.
                 Dataholder newRecipe = new Dataholder();
                 String[] dataReceived = data.getStringArrayExtra("ReturnData");
@@ -121,6 +118,7 @@ public class MainRecipeScreen extends Activity {
         listRecipes = (ListView) findViewById(R.id.listRecipes);
         sSort = (Spinner) findViewById(R.id.sSort);
 
+       // recipes = GlobalRecipeList.getInstance().recipeList;
         recipes = new ArrayList<Dataholder>();
 
         fillWithExampleRecipes();
@@ -165,7 +163,6 @@ public class MainRecipeScreen extends Activity {
     }
 
     /**
-     * Fill list with dummy recipes. "ABC", "BCD", "CDE", and so on.
      */
     private void fillWithExampleRecipes() {
         Dataholder test = new Dataholder();
