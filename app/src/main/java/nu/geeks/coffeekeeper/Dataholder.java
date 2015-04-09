@@ -34,9 +34,9 @@ public class Dataholder {
         temp=0;
         brewTime=new ArrayList<Integer>();
       //  totalTime=0;
-        kindCoffe="";
-        comments="";
-        name="";
+        kindCoffe=" ";
+        comments=" ";
+        name=" ";
     }
 
     //set name constructor
@@ -47,8 +47,8 @@ public class Dataholder {
         temp=0;
         brewTime=new ArrayList<Integer>();
        // totalTime=0;
-        kindCoffe="";
-        comments="";
+        kindCoffe=" ";
+        comments=" ";
         this.name=name;
     }
 

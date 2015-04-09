@@ -92,8 +92,11 @@ public class MainRecipeScreen extends Activity {
 
                 //Data recieved from CreateRecipe. Save it to recipies.
                 Dataholder newRecipe = new Dataholder();
-                String[] dataReceived = data.getStringArrayExtra("ReturnData");
+                String dataReceived = data.getStringExtra("ReturnData");
 
+
+
+                /* OLD SOLUTION
                 newRecipe.setName(dataReceived[0]);
                 newRecipe.setComments(dataReceived[1]);
                 newRecipe.setKindCoffe(dataReceived[2]);
@@ -103,7 +106,9 @@ public class MainRecipeScreen extends Activity {
                 newRecipe.setGrind(Integer.parseInt(dataReceived[6]));
                 newRecipe.setTemp(Integer.parseInt(dataReceived[7]));
 
-                recipes.add(newRecipe);
+                */
+
+                recipes.add(DataSaveAndRead.readRecipeString(dataReceived));
 
                 recipeAdapter.notifyDataSetChanged();
 

@@ -18,8 +18,6 @@ public class CreateRecipe extends Activity {
     private EditText eName, eComment, eCoffeAmount, eWaterAmount, eGrindAmount, eBrewtime, eCoffeeType, eTemp;
     private String name, comment, coffeeamount, wateramount, grindamount, brewtime;
 
-    //TODO - IMPORTANT! No field can contain the symbol € and %, it is used by the parser when saving data.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +59,6 @@ public class CreateRecipe extends Activity {
                         ) {
                     Toast.makeText(getApplicationContext(), "Fyll i alla fält!", Toast.LENGTH_LONG).show();
                 }else{
-
-                    /*
-
                     Dataholder recipe = new Dataholder();
                     recipe.setTemp(Integer.parseInt(eTemp.toString()));
                     recipe.setName(eName.toString());
@@ -73,10 +68,7 @@ public class CreateRecipe extends Activity {
                     recipe.setAmountCoffe(Integer.parseInt(eCoffeAmount.toString()));
                     recipe.setBrewTime(1,Integer.parseInt(eBrewtime.toString()));
 
-                    GlobalRecipeList.getInstance().recipeList.add(recipe);
-
-                    */
-                    //Dataholder data = new Dataholder();
+                    //Check i user used symbol '€' or '%'. These are illegal, used as identifiers in parser.
                     String[] dataToSave = new String[8];
                     dataToSave[0] = eName.getText().toString();
                     dataToSave[1] = eComment.getText().toString();
@@ -86,11 +78,7 @@ public class CreateRecipe extends Activity {
                     dataToSave[5] = eBrewtime.getText().toString();
                     dataToSave[6] = eGrindAmount.getText().toString();
                     dataToSave[7] = eTemp.getText().toString();
-
                     boolean save = true;
-
-
-                    //Check i user used symbol '€' or '%'. These are illegal, used as identifiers in parser.
                     for(String s : dataToSave){
                         for(char c : s.toCharArray()){
                             if(c == '€' || c == '%') save = false;
@@ -98,9 +86,12 @@ public class CreateRecipe extends Activity {
                     }
 
                     if(save) {
+
+                        String sendData = DataSaveAndRead.saveRecipe(recipe);
+                        
                         //Save the data in an intent, to be catched by the main acticity when this exits.
                         Intent resultIntent = new Intent();
-                        resultIntent.putExtra("ReturnData", dataToSave);
+                        resultIntent.putExtra("ReturnData", sendData);
                         setResult(RESULT_OK, resultIntent);
                         finish();
                     }else {
