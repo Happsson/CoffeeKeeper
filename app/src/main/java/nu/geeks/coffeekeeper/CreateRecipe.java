@@ -18,6 +18,8 @@ public class CreateRecipe extends Activity {
     private EditText eName, eComment, eCoffeAmount, eWaterAmount, eGrindAmount, eBrewtime, eCoffeeType, eTemp;
     private String name, comment, coffeeamount, wateramount, grindamount, brewtime;
 
+    //TODO - IMPORTANT! No field can contain the symbol € and %, it is used by the parser when saving data.
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,12 +87,25 @@ public class CreateRecipe extends Activity {
                     dataToSave[6] = eGrindAmount.getText().toString();
                     dataToSave[7] = eTemp.getText().toString();
 
-                    //Save the data in an intent, to be catched by the main acticity when this exits.
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("ReturnData", dataToSave);
-                    setResult(RESULT_OK, resultIntent);
+                    boolean save = true;
 
-                    finish();
+
+                    //Check i user used symbol '€' or '%'. These are illegal, used as identifiers in parser.
+                    for(String s : dataToSave){
+                        for(char c : s.toCharArray()){
+                            if(c == '€' || c == '%') save = false;
+                        }
+                    }
+
+                    if(save) {
+                        //Save the data in an intent, to be catched by the main acticity when this exits.
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("ReturnData", dataToSave);
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Tyvärr får du inte använda € eller % i något fält.", Toast.LENGTH_LONG).show();
+                    }
 
                 }
 

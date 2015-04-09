@@ -16,15 +16,15 @@ import java.util.Comparator;
 
 public class Dataholder {
     //all object fields
-    private int amountCoffe;
-    private int amountWater;
-    private int grind;
-    private int temp;
-    private ArrayList<Integer> brewTime;
+    int amountCoffe;
+    int amountWater;
+     int grind;
+     int temp;
+     ArrayList<Integer> brewTime;
     //private int totalTime;
-    private String kindCoffe;
-    private String comments;
-    private String name;
+     String kindCoffe;
+     String comments;
+     String name;
 
     //constructor without arguments
     public Dataholder(){
