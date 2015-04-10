@@ -93,8 +93,8 @@ public class MainRecipeScreen extends Activity {
                 //Data recieved from CreateRecipe. Save it to recipies.
                 Dataholder newRecipe = new Dataholder();
                 String dataReceived = data.getStringExtra("ReturnData");
-
-                recipes.add(DataSaveAndRead.readRecipeString(dataReceived));
+                Dataholder recipe = DataSaveAndRead.readRecipeString(dataReceived);
+                recipes.add(recipe);
 
                 recipeAdapter.notifyDataSetChanged();
 

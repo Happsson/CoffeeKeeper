@@ -69,6 +69,12 @@ public class Dataholder {
         this.temp=temp;
     }
 
+    /**
+     * TODO - how does this work? When calling with index = 0, program hangs.
+     *
+     * @param index
+     * @param brewTime
+     */
     public void setBrewTime(int index, int brewTime){
         //if index is larger than size, then just add element
         if(index>this.brewTime.size()) {

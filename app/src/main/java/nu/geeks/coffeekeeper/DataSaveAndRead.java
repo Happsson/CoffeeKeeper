@@ -109,6 +109,7 @@ public class DataSaveAndRead {
         Dataholder recipe = new Dataholder();
 
         String read = "";
+
         int value = 0;
 
         for(int i = 0; i < inputString.length(); i++){
@@ -151,20 +152,17 @@ public class DataSaveAndRead {
                 recipe.setAmmountWater(Integer.parseInt(read));
                 break;
             case 5:
-
-
-
                 recipe.setGrind(Integer.parseInt(read));
-
                 break;
             case 6:
-                recipe.setBrewTime(0, Integer.parseInt(read)); //TODO - more than one brew time
+                recipe.setBrewTime(1, Integer.parseInt(read)); //TODO - more than one brew time
                 break;
             case 7:
                 recipe.setTemp(Integer.parseInt(read));
                 break;
             default:
                 Log.d("ERROR", "Error in parser, default case should never happen!");
+                break;
         }
     }
 }
