@@ -23,6 +23,11 @@ public class CreateRecipe extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_recipe);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         eName = (EditText) findViewById(R.id.eName);
         eComment = (EditText) findViewById(R.id.eComment);
@@ -35,7 +40,6 @@ public class CreateRecipe extends Activity {
 
         bSave = (Button) findViewById(R.id.bSave);
         bCancel = (Button) findViewById(R.id.bCancel);
-
 
         listeners();
 
@@ -64,6 +68,7 @@ public class CreateRecipe extends Activity {
 
                     recipe.setTemp(Integer.parseInt(eTemp.getText().toString().trim()));
                     recipe.setName(eName.getText().toString());
+                    recipe.setComments(eComment.getText().toString());
                     recipe.setKindCoffe(eCoffeeType.getText().toString());
                     recipe.setGrind(Integer.parseInt(eGrindAmount.getText().toString().trim()));
                     recipe.setAmmountWater(Integer.parseInt(eWaterAmount.getText().toString().trim()));

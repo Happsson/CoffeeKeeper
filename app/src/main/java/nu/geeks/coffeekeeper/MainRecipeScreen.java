@@ -1,6 +1,7 @@
 package nu.geeks.coffeekeeper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -18,6 +19,12 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -31,6 +38,11 @@ public class MainRecipeScreen extends Activity {
     private ArrayList<Dataholder> recipes;
     private ArrayAdapter<Dataholder> recipeAdapter;
 
+    private boolean hasPlayedSplash = false;
+
+    private final String savedRecipes = "saved_recipes";
+    private final int splashRequestCode = 1;
+
     private final String[] SORTOPTIONS = {
             "Sortera efter namn",
             "Sortera efter bryggtid"
@@ -42,8 +54,81 @@ public class MainRecipeScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recipe_screen);
+
+
+        //Check if there are any saved instances of the recipe-list. If not, create a new empty
+        //list.
+        if(savedInstanceState == null){
+            recipes = new ArrayList<Dataholder>();
+
+        }else{
+            //If there are a list saved, retrieve it as a string and convert it to a recipelist.
+            recipes = DataSaveAndRead.readListString(savedInstanceState.getString(savedRecipes));
+        }
+
         initializeView();
         initializeButton();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        //Save the current recipelist when app closes. Convert it to a String and save it.
+        outState.putString(savedRecipes, DataSaveAndRead.saveList(recipes));
+
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * This is the method that is called when the app comes back alive after when app i being
+     * reopened.
+     *
+     * Stuff is initialized here instead of in onCreate for this reason.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+        //initializeView();
+        //initializeButton();
+
+        //Start splash-screen
+        if(!hasPlayedSplash) {
+            Intent intent = new Intent(this, SplashScreen.class);
+            startActivityForResult(intent, splashRequestCode);
+        }
+
+        String savedRecipes = readSavedData();
+        if(savedRecipes != null){
+            recipes = DataSaveAndRead.readListString(savedRecipes);
+            recipeAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public String readSavedData ( ) {
+        StringBuffer datax = new StringBuffer("");
+        try {
+            FileInputStream fIn = openFileInput(savedRecipes) ;
+            InputStreamReader isr = new InputStreamReader ( fIn ) ;
+            BufferedReader buffreader = new BufferedReader ( isr ) ;
+
+            String readString = buffreader.readLine ( ) ;
+            while ( readString != null ) {
+                datax.append(readString);
+                readString = buffreader.readLine ( ) ;
+            }
+
+            isr.close ( ) ;
+        } catch ( IOException ioe ) {
+            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            ioe.printStackTrace ( ) ;
+        }
+        String returnString = datax.toString();
+        if(returnString.length() != 0) return returnString;
+        else return null;
+
     }
 
     private void initializeButton() {
@@ -102,6 +187,9 @@ public class MainRecipeScreen extends Activity {
                 Toast.makeText(getApplicationContext(), "Recept sparat!", Toast.LENGTH_LONG).show();
             }
         }
+        if(requestCode == splashRequestCode){
+            hasPlayedSplash = true;
+        }
     }
 
     private void initializeView(){
@@ -110,9 +198,6 @@ public class MainRecipeScreen extends Activity {
         sSort = (Spinner) findViewById(R.id.sSort);
 
        // recipes = GlobalRecipeList.getInstance().recipeList;
-        recipes = new ArrayList<Dataholder>();
-
-        fillWithExampleRecipes();
 
         sortOptions = new ArrayList<String>();
 
@@ -126,9 +211,6 @@ public class MainRecipeScreen extends Activity {
         ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sortOptions);
         sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sSort.setAdapter(sortAdapter);
-
-        Log.d(TAG, recipes.get(0).getName());
-        Log.d(TAG, recipes.get(0).getComments());
 
         recipeAdapter = new ArrayAdapter<Dataholder>(this, android.R.layout.simple_list_item_2,
                 android.R.id.text1, recipes){
@@ -151,6 +233,26 @@ public class MainRecipeScreen extends Activity {
 
         listRecipes.setAdapter(recipeAdapter);
 
+    }
+
+    @Override
+    protected void onStop() {
+
+        //Save recipe list
+        String recipeString = DataSaveAndRead.saveList(recipes);
+
+        try {
+            FileOutputStream fos = openFileOutput(savedRecipes, Context.MODE_PRIVATE);
+            fos.write(recipeString.getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Can't find file", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "Can't write to file", Toast.LENGTH_LONG).show();
+        }
+
+
+        super.onStop();
     }
 
     /**
