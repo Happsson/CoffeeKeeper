@@ -122,7 +122,7 @@ public class MainRecipeScreen extends Activity {
 
             isr.close ( ) ;
         } catch ( IOException ioe ) {
-            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Can't read internal storage", Toast.LENGTH_LONG).show();
             ioe.printStackTrace ( ) ;
         }
         String returnString = datax.toString();
@@ -189,7 +189,6 @@ public class MainRecipeScreen extends Activity {
     private void createRecipe() {
         Intent intent = new Intent(this, CreateRecipe.class);
         startActivityForResult(intent, CREATE_RECIPE);
-
     }
 
     @Override

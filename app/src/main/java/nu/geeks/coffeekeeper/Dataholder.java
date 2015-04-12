@@ -70,19 +70,17 @@ public class Dataholder {
     }
 
     /**
-     * TODO - how does this work? When calling with index = 0, program hangs.
-     *
      * @param index
      * @param brewTime
      */
     public void setBrewTime(int index, int brewTime){
         //if index is larger than size, then just add element
-        if(index>this.brewTime.size()) {
+        //if(index>this.brewTime.size()) {
             this.brewTime.add(brewTime);
-        }else{      //else remove previous entry then add current element
-            this.brewTime.remove(index);
-            this.brewTime.add(index,brewTime);
-        }
+        //}else{      //else remove previous entry then add current element
+         //   this.brewTime.remove(index);
+          //  this.brewTime.add(index,brewTime);
+        //}
     }
 
     public void setKindCoffe(String kindCoffe){
