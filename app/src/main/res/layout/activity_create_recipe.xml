@@ -50,7 +50,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="200dp" />
+                android:layout_marginTop="200dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true" />
 
 
         </RelativeLayout>
@@ -76,8 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="68dp"
-                android:text="Lägg till en kommentar, om du vill."
+                android:layout_marginTop="50dp"
+                android:text="Lägg till en kommentar,\n om du vill."
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -85,7 +87,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="200dp" />
+                android:layout_marginTop="200dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true" />
 
 
         </RelativeLayout>
@@ -120,7 +124,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="200dp" />
+                android:layout_marginTop="200dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true" />
 
 
         </RelativeLayout>
@@ -284,16 +290,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="68dp"
-                android:text="Ställin upp till tre bryggtider"
+                android:layout_marginTop="500dp"
+                android:text="Ställin upp till\ntre bryggtider"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
 
             <ScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/scrollView2"
+                android:id="@+id/scrollView"
                 android:layout_below="@+id/tBrewttimers"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="100dp">
@@ -308,8 +314,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tpBrew1"
                         android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="100dp" />
+                        android:layout_centerHorizontal="true" />
 
                     <TimePicker
                         android:layout_width="wrap_content"

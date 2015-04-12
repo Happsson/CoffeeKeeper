@@ -98,6 +98,7 @@ public class MainRecipeScreen extends Activity {
         if(!hasPlayedSplash) {
             Intent intent = new Intent(this, SplashScreen.class);
             startActivityForResult(intent, splashRequestCode);
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
 
         String savedRecipes = readSavedData();
@@ -189,6 +190,7 @@ public class MainRecipeScreen extends Activity {
     private void createRecipe() {
         Intent intent = new Intent(this, CreateRecipe.class);
         startActivityForResult(intent, CREATE_RECIPE);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     @Override
@@ -277,21 +279,6 @@ public class MainRecipeScreen extends Activity {
         super.onStop();
     }
 
-    /**
-     */
-    private void fillWithExampleRecipes() {
-        Dataholder test = new Dataholder();
-        test.setAmmountWater(2);
-        test.setAmountCoffe(4);
-        test.setBrewTime(1,1);
-        test.setComments("Kommentar");
-        test.setGrind(3);
-        test.setKindCoffe("tjo");
-        test.setName("Kaffe1");
-        test.setTemp(4);
-
-        recipes.add(test);
-    }
 
 
     //TODO - add menu buttons

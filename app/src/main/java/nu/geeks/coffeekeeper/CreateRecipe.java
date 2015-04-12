@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.ScrollView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -26,7 +27,7 @@ public class CreateRecipe extends Activity {
     private NumberPicker npTemp,  npWater, npCoffee, npGrind;
     private TimePicker tpBrew1, tpBrew2,tpBrew3;
     private ViewFlipper viewFlipper;
-
+    private ScrollView sv;
 
 
     @Override
@@ -48,7 +49,7 @@ public class CreateRecipe extends Activity {
             @Override
             public void onClick(View v) {
                 if(eName.getText().length() > 0){
-                    recipe.setName(eName.toString());
+                    recipe.setName(eName.getText().toString());
                     viewFlipper.showNext();
                 }else{
                     Toast.makeText(getApplicationContext(), "Ditt recept behöver ett namn!", Toast.LENGTH_LONG).show();
@@ -60,7 +61,7 @@ public class CreateRecipe extends Activity {
             @Override
             public void onClick(View v) {
                 if(eComment.getText().length() > 0){
-                    recipe.setComments(eComment.toString());
+                    recipe.setComments(eComment.getText().toString());
                 }else{
                     recipe.setComments(" "); //No comment set, which is fine.
                 }
@@ -72,7 +73,7 @@ public class CreateRecipe extends Activity {
             @Override
             public void onClick(View v) {
                 if(eCoffeeType.getText().length() > 0){
-                    recipe.setKindCoffe(eCoffeeType.toString());
+                    recipe.setKindCoffe(eCoffeeType.getText().toString());
 
                 }else{
                    recipe.setKindCoffe(" ");
@@ -116,8 +117,13 @@ public class CreateRecipe extends Activity {
         bS8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int time = tpBrew1.getCurrentHour()*60 + tpBrew1.getCurrentMinute();
-                recipe.setBrewTime(1, time);
+                int time1 = tpBrew1.getCurrentHour()*60 + tpBrew1.getCurrentMinute();
+                int time2 = tpBrew2.getCurrentHour()*60 + tpBrew2.getCurrentMinute();
+                int time3 = tpBrew3.getCurrentHour()*60 + tpBrew3.getCurrentMinute();
+                recipe.setBrewTime(time1);
+                recipe.setBrewTime(time2);
+                recipe.setBrewTime(time3);
+
                 setResultAndFinis();
 
             }
@@ -125,7 +131,14 @@ public class CreateRecipe extends Activity {
     }
 
     private void setResultAndFinis() {
-        //TODO
+        String sendData = DataSaveAndRead.saveRecipe(recipe);
+
+        //Save the data in an intent, to be catched by the main acticity when this exits.
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("ReturnData", sendData);
+        setResult(RESULT_OK, resultIntent);
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
 
@@ -170,6 +183,7 @@ public class CreateRecipe extends Activity {
 
         viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
+        sv = (ScrollView) findViewById(R.id.scrollView);
 
         npCoffee.setMinValue(0);
         npCoffee.setMaxValue(100);
@@ -191,6 +205,9 @@ public class CreateRecipe extends Activity {
         tpBrew1.setIs24HourView(true);
         tpBrew2.setIs24HourView(true);
         tpBrew3.setIs24HourView(true);
+
+        sv.setScrollbarFadingEnabled(false);
+        sv.setScrollBarSize(5);
 
     }
 

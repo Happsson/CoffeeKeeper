@@ -155,7 +155,7 @@ public class DataSaveAndRead {
                 recipe.setGrind(Integer.parseInt(read));
                 break;
             case 6:
-                recipe.setBrewTime(1, Integer.parseInt(read)); //TODO - more than one brew time
+                recipe.setBrewTime(Integer.parseInt(read)); //TODO - more than one brew time
                 break;
             case 7:
                 recipe.setTemp(Integer.parseInt(read));
