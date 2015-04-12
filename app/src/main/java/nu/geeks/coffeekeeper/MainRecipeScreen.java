@@ -161,6 +161,29 @@ public class MainRecipeScreen extends Activity {
 
             }
         });
+
+        listRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openRecipe(position);
+            }
+        });
+    }
+
+    /**
+     * Method that opens up a recipe. Converts selected recipe to string and sends it
+     * as an extra with the intent when starting the recipe activity.
+     *
+     * @param index index of the recipe to load in main recipelist.
+     */
+    private void openRecipe(int index){
+        //convert selected recipe to string.
+        String recipeData = DataSaveAndRead.saveRecipe(recipes.get(index));
+
+        Intent intent = new Intent(this, CreateRecipe.class);
+        intent.putExtra("ReceivedRecipe", recipeData);
+        startActivity(intent);
+
     }
 
     private void createRecipe() {
