@@ -70,10 +70,9 @@ public class Dataholder {
     }
 
     /**
-     * @param index
      * @param brewTime
      */
-    public void setBrewTime(int index, int brewTime){
+    public void setBrewTime(int brewTime){
         //if index is larger than size, then just add element
         //if(index>this.brewTime.size()) {
             this.brewTime.add(brewTime);
