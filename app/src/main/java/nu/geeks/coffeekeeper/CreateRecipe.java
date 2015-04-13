@@ -130,12 +130,16 @@ public class CreateRecipe extends Activity {
     }
 
     private void setResultAndFinis() {
+
         String sendData = DataSaveAndRead.saveRecipe(recipe);
 
         //Save the data in an intent, to be catched by the main acticity when this exits.
         Intent resultIntent = new Intent();
+
         resultIntent.putExtra("ReturnData", sendData);
+
         setResult(RESULT_OK, resultIntent);
+
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }

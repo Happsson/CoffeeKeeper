@@ -177,10 +177,11 @@ public class MainRecipeScreen extends Activity {
         //convert selected recipe to string.
         String recipeData = DataSaveAndRead.saveRecipe(recipes.get(index));
 
+        /*
         Intent intent = new Intent(this, CreateRecipe.class);
         intent.putExtra("ReceivedRecipe", recipeData);
         startActivity(intent);
-
+        */
     }
 
     private void createRecipe() {
@@ -239,7 +240,7 @@ public class MainRecipeScreen extends Activity {
 
 
                 //Data recieved from CreateRecipe. Save it to recipies.
-                Recipe newRecipe = new Recipe();
+
                 String dataReceived = data.getStringExtra("ReturnData");
                 Recipe recipe = DataSaveAndRead.readRecipeString(dataReceived);
                 recipes.add(recipe);
@@ -272,6 +273,7 @@ public class MainRecipeScreen extends Activity {
             fos.close();
         } catch (FileNotFoundException e) {
             Toast.makeText(getApplicationContext(), "Can't find file", Toast.LENGTH_LONG).show();
+
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Can't write to file", Toast.LENGTH_LONG).show();
         }
