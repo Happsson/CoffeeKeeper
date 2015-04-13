@@ -3,7 +3,6 @@ package nu.geeks.coffeekeeper;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,7 @@ import android.widget.ViewFlipper;
 
 public class CreateRecipe extends Activity {
 
-    private Dataholder recipe;
+    private Recipe recipe;
 
     private int CREATE_RECIPE = 1234;
     private Button bS1, bS2,bS3,bS4,bS5,bS6,bS7,bS8;
@@ -37,7 +36,7 @@ public class CreateRecipe extends Activity {
 
         initializeXMLConnections();
 
-        recipe = new Dataholder();
+        recipe = new Recipe();
 
         setButtonListeners();
 

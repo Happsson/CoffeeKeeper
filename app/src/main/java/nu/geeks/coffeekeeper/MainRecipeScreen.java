@@ -3,9 +3,7 @@ package nu.geeks.coffeekeeper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +32,8 @@ public class MainRecipeScreen extends Activity {
     private ListView listRecipes;
     private Spinner sSort;
     private ArrayList<String> sortOptions;
-    private ArrayList<Dataholder> recipes;
-    private ArrayAdapter<Dataholder> recipeAdapter;
+    private ArrayList<Recipe> recipes;
+    private ArrayAdapter<Recipe> recipeAdapter;
 
     private boolean hasPlayedSplash = false;
 
@@ -59,11 +56,13 @@ public class MainRecipeScreen extends Activity {
         //Check if there are any saved instances of the recipe-list. If not, create a new empty
         //list.
         if(savedInstanceState == null){
-            recipes = new ArrayList<Dataholder>();
+            recipes = new ArrayList<Recipe>();
 
         }else{
+
             //If there are a list saved, retrieve it as a string and convert it to a recipelist.
             recipes = DataSaveAndRead.readListString(savedInstanceState.getString(savedRecipes));
+
         }
 
         initializeView();
@@ -89,11 +88,6 @@ public class MainRecipeScreen extends Activity {
     protected void onResume() {
         super.onResume();
 
-
-
-        //initializeView();
-        //initializeButton();
-
         //Start splash-screen
         if(!hasPlayedSplash) {
             Intent intent = new Intent(this, SplashScreen.class);
@@ -105,6 +99,8 @@ public class MainRecipeScreen extends Activity {
         if(savedRecipes != null){
             recipes = DataSaveAndRead.readListString(savedRecipes);
             recipeAdapter.notifyDataSetChanged();
+        }else{
+            Toast.makeText(getApplicationContext(), "ERROR: no saved recipes on return", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -147,11 +143,11 @@ public class MainRecipeScreen extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(sortOptions.get(position).equals(SORTOPTIONS[0])){ //SORTOPTION[0] == "Sort by name"
-                    recipeAdapter.sort(new DataholderNameComparator());
+                    recipeAdapter.sort(new RecipeNameComparator());
                     recipeAdapter.notifyDataSetChanged();
                 }
                 if(sortOptions.get(position).equals(SORTOPTIONS[1])){ // Sort by brewtime
-                    recipeAdapter.sort(new DataholderTimeComparator());
+                    recipeAdapter.sort(new RecipeTimeComparator());
                     recipeAdapter.notifyDataSetChanged();
                 }
 
@@ -188,40 +184,17 @@ public class MainRecipeScreen extends Activity {
     }
 
     private void createRecipe() {
+        //Save current state of recipelist before
+        saveData();
         Intent intent = new Intent(this, CreateRecipe.class);
         startActivityForResult(intent, CREATE_RECIPE);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == CREATE_RECIPE){
-            if(resultCode == RESULT_OK){
-
-
-                //Data recieved from CreateRecipe. Save it to recipies.
-                Dataholder newRecipe = new Dataholder();
-                String dataReceived = data.getStringExtra("ReturnData");
-                Dataholder recipe = DataSaveAndRead.readRecipeString(dataReceived);
-                recipes.add(recipe);
-
-                recipeAdapter.notifyDataSetChanged();
-
-
-                Toast.makeText(getApplicationContext(), "Recept sparat!", Toast.LENGTH_LONG).show();
-            }
-        }
-        if(requestCode == splashRequestCode){
-            hasPlayedSplash = true;
-        }
     }
 
     private void initializeView(){
         bAddRecipe = (Button) findViewById(R.id.bNewRecipe);
         listRecipes = (ListView) findViewById(R.id.listRecipes);
         sSort = (Spinner) findViewById(R.id.sSort);
-
-       // recipes = GlobalRecipeList.getInstance().recipeList;
 
         sortOptions = new ArrayList<String>();
 
@@ -236,7 +209,7 @@ public class MainRecipeScreen extends Activity {
         sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sSort.setAdapter(sortAdapter);
 
-        recipeAdapter = new ArrayAdapter<Dataholder>(this, android.R.layout.simple_list_item_2,
+        recipeAdapter = new ArrayAdapter<Recipe>(this, android.R.layout.simple_list_item_2,
                 android.R.id.text1, recipes){
 
             @Override
@@ -260,8 +233,36 @@ public class MainRecipeScreen extends Activity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == CREATE_RECIPE){
+            if(resultCode == RESULT_OK){
 
+
+                //Data recieved from CreateRecipe. Save it to recipies.
+                Recipe newRecipe = new Recipe();
+                String dataReceived = data.getStringExtra("ReturnData");
+                Recipe recipe = DataSaveAndRead.readRecipeString(dataReceived);
+                recipes.add(recipe);
+
+                recipeAdapter.notifyDataSetChanged();
+
+
+                Toast.makeText(getApplicationContext(), "Recept sparat!", Toast.LENGTH_LONG).show();
+            }
+        }
+        if(requestCode == splashRequestCode){
+            hasPlayedSplash = true;
+        }
+    }
+
+
+    @Override
+    protected void onStop() {
+        saveData();
+        super.onStop();
+    }
+
+    private void saveData() {
         //Save recipe list
         String recipeString = DataSaveAndRead.saveList(recipes);
 
@@ -274,11 +275,7 @@ public class MainRecipeScreen extends Activity {
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Can't write to file", Toast.LENGTH_LONG).show();
         }
-
-
-        super.onStop();
     }
-
 
 
     //TODO - add menu buttons
@@ -291,11 +288,8 @@ public class MainRecipeScreen extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
+        int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;

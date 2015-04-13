@@ -14,7 +14,7 @@ package nu.geeks.coffeekeeper;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Dataholder {
+public class Recipe {
     //all object fields
     int amountCoffe;
     int amountWater;
@@ -27,7 +27,7 @@ public class Dataholder {
      String name;
 
     //constructor without arguments
-    public Dataholder(){
+    public Recipe(){
         amountCoffe=0;
         amountWater=0;
         grind=0;
@@ -40,7 +40,7 @@ public class Dataholder {
     }
 
     //set name constructor
-    public Dataholder(String name){
+    public Recipe(String name){
         amountCoffe=0;
         amountWater=0;
         grind=0;
@@ -146,8 +146,8 @@ public class Dataholder {
  *Quick->compares totaltime, -1for less, 0 for equal, 1 for greater
  *takes both objects to be compared as arguments
  *****************************************************************/
-class DataholderTimeComparator implements Comparator<Dataholder> {
-    public int compare(Dataholder d1,Dataholder d2){
+class RecipeTimeComparator implements Comparator<Recipe> {
+    public int compare(Recipe d1,Recipe d2){
         int t1=d1.getTotalTime();
         int t2=d2.getTotalTime();
         if      (t1<t2) return-1;
@@ -159,8 +159,8 @@ class DataholderTimeComparator implements Comparator<Dataholder> {
  *Quick->  compares names, -1for less, 0 for equal, 1 for greater
  *takes both objects to be compared as arguments
  *****************************************************************/
-class DataholderNameComparator implements Comparator<Dataholder>{
-    public int compare(Dataholder d1,Dataholder d2){
+class RecipeNameComparator implements Comparator<Recipe>{
+    public int compare(Recipe d1,Recipe d2){
         String name1=d1.getName();
         String name2=d2.getName();
         int comp=name1.compareTo(name2);

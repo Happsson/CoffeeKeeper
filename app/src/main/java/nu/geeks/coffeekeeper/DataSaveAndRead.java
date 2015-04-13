@@ -1,6 +1,5 @@
 package nu.geeks.coffeekeeper;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -24,10 +23,10 @@ public class DataSaveAndRead {
      * @param recipeList the list to convert
      * @return the string generated
      */
-    public static String saveList(ArrayList<Dataholder> recipeList){
+    public static String saveList(ArrayList<Recipe> recipeList){
         String dataString = "";
 
-        for(Dataholder recipe : recipeList) {
+        for(Recipe recipe : recipeList) {
             dataString += saveRecipe(recipe);
         }
 
@@ -44,10 +43,10 @@ public class DataSaveAndRead {
      * @param inputString the string to be converted
      * @return ArrayList<Dataholder> the list.
      */
-    public static ArrayList<Dataholder> readListString(String inputString){
-        ArrayList<Dataholder> recipeList = new ArrayList<Dataholder>();
+    public static ArrayList<Recipe> readListString(String inputString){
+        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
 
-        Dataholder recipe = new Dataholder();
+        Recipe recipe = new Recipe();
         int value = 0;
 
         String read = "";
@@ -82,7 +81,7 @@ public class DataSaveAndRead {
      * @param recipe the recipe to be converted.
      * @return String the converted string.
      */
-    public static String saveRecipe(Dataholder recipe){
+    public static String saveRecipe(Recipe recipe){
         String dataString = "";
         //Using symbol € and % as identifiers. Not likely to be used by user.
         dataString += "€" + recipe.getName() + "€";
@@ -105,8 +104,8 @@ public class DataSaveAndRead {
      * @param inputString
      * @return
      */
-    public static Dataholder readRecipeString(String inputString){
-        Dataholder recipe = new Dataholder();
+    public static Recipe readRecipeString(String inputString){
+        Recipe recipe = new Recipe();
 
         String read = "";
 
@@ -134,7 +133,7 @@ public class DataSaveAndRead {
 
     }
 
-    private static void addProperty(Dataholder recipe, int value, String read) {
+    private static void addProperty(Recipe recipe, int value, String read) {
         switch(value){
             case 0:
                 recipe.setName(read);
