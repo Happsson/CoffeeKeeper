@@ -62,7 +62,7 @@ public class CreateRecipe extends Activity {
                 if(eComment.getText().length() > 0){
                     recipe.setComments(eComment.getText().toString());
                 }else{
-                    recipe.setComments(" "); //No comment set, which is fine.
+                    recipe.setComments("(Inga kommentarer)"); //No comment set, which is fine.
                 }
                 viewFlipper.showNext();
             }
@@ -116,6 +116,7 @@ public class CreateRecipe extends Activity {
         bS8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO - add nicer looking timers.
                 int time1 = tpBrew1.getCurrentHour()*60 + tpBrew1.getCurrentMinute();
                 int time2 = tpBrew2.getCurrentHour()*60 + tpBrew2.getCurrentMinute();
                 int time3 = tpBrew3.getCurrentHour()*60 + tpBrew3.getCurrentMinute();
@@ -123,22 +124,15 @@ public class CreateRecipe extends Activity {
                 recipe.setBrewTime(time2);
                 recipe.setBrewTime(time3);
 
-                setResultAndFinis();
+                setResultAndFinish();
 
             }
         });
     }
 
-    private void setResultAndFinis() {
+    private void setResultAndFinish() {
 
-        String sendData = DataSaveAndRead.saveRecipe(recipe);
-
-        //Save the data in an intent, to be catched by the main acticity when this exits.
-        Intent resultIntent = new Intent();
-
-        resultIntent.putExtra("ReturnData", sendData);
-
-        setResult(RESULT_OK, resultIntent);
+        ((InAppData) this.getApplication()).addRecipe(recipe);
 
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -222,16 +216,11 @@ public class CreateRecipe extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.menu_create_recipe, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return super.onOptionsItemSelected(item);
     }
 }

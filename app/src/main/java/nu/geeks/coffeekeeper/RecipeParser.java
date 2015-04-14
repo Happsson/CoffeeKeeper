@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by hannespa on 15-04-09.
  */
-public class DataSaveAndRead {
+public class RecipeParser {
 
 
     /**

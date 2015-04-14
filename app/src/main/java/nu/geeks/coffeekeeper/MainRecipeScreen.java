@@ -56,12 +56,10 @@ public class MainRecipeScreen extends Activity {
         //Check if there are any saved instances of the recipe-list. If not, create a new empty
         //list.
         if(savedInstanceState == null){
-            recipes = new ArrayList<Recipe>();
-
+            recipes = ((InAppData) this.getApplication()).getRecipes();
         }else{
-
             //If there are a list saved, retrieve it as a string and convert it to a recipelist.
-            recipes = DataSaveAndRead.readListString(savedInstanceState.getString(savedRecipes));
+            recipes = RecipeParser.readListString(savedInstanceState.getString(savedRecipes));
 
         }
 
@@ -73,7 +71,7 @@ public class MainRecipeScreen extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
 
         //Save the current recipelist when app closes. Convert it to a String and save it.
-        outState.putString(savedRecipes, DataSaveAndRead.saveList(recipes));
+        outState.putString(savedRecipes, RecipeParser.saveList(recipes));
 
         super.onSaveInstanceState(outState);
     }
@@ -88,20 +86,17 @@ public class MainRecipeScreen extends Activity {
     protected void onResume() {
         super.onResume();
 
+        if(recipes == null){
+            Toast.makeText(getApplicationContext(), "I've missunderstood :(", Toast.LENGTH_LONG).show();
+        }
+
         //Start splash-screen
         if(!hasPlayedSplash) {
             Intent intent = new Intent(this, SplashScreen.class);
             startActivityForResult(intent, splashRequestCode);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
-
-        String savedRecipes = readSavedData();
-        if(savedRecipes != null){
-            recipes = DataSaveAndRead.readListString(savedRecipes);
-            recipeAdapter.notifyDataSetChanged();
-        }else{
-            Toast.makeText(getApplicationContext(), "ERROR: no saved recipes on return", Toast.LENGTH_LONG).show();
-        }
+        recipeAdapter.notifyDataSetChanged(); //Make sure recipe-list is up to date
     }
 
     public String readSavedData ( ) {
@@ -133,9 +128,7 @@ public class MainRecipeScreen extends Activity {
         bAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 createRecipe();
-
             }
         });
 
@@ -174,21 +167,17 @@ public class MainRecipeScreen extends Activity {
      * @param index index of the recipe to load in main recipelist.
      */
     private void openRecipe(int index){
-        //convert selected recipe to string.
-        String recipeData = DataSaveAndRead.saveRecipe(recipes.get(index));
 
-        /*
-        Intent intent = new Intent(this, CreateRecipe.class);
-        intent.putExtra("ReceivedRecipe", recipeData);
+        Intent intent = new Intent(this, RecipeScreen.class);
+        intent.putExtra("ReceivedRecipe", index);
         startActivity(intent);
-        */
+
     }
 
     private void createRecipe() {
-        //Save current state of recipelist before
-        saveData();
+
         Intent intent = new Intent(this, CreateRecipe.class);
-        startActivityForResult(intent, CREATE_RECIPE);
+        startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
@@ -235,22 +224,6 @@ public class MainRecipeScreen extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == CREATE_RECIPE){
-            if(resultCode == RESULT_OK){
-
-
-                //Data recieved from CreateRecipe. Save it to recipies.
-
-                String dataReceived = data.getStringExtra("ReturnData");
-                Recipe recipe = DataSaveAndRead.readRecipeString(dataReceived);
-                recipes.add(recipe);
-
-                recipeAdapter.notifyDataSetChanged();
-
-
-                Toast.makeText(getApplicationContext(), "Recept sparat!", Toast.LENGTH_LONG).show();
-            }
-        }
         if(requestCode == splashRequestCode){
             hasPlayedSplash = true;
         }
@@ -265,7 +238,7 @@ public class MainRecipeScreen extends Activity {
 
     private void saveData() {
         //Save recipe list
-        String recipeString = DataSaveAndRead.saveList(recipes);
+        String recipeString = RecipeParser.saveList(recipes);
 
         try {
             FileOutputStream fos = openFileOutput(savedRecipes, Context.MODE_PRIVATE);
