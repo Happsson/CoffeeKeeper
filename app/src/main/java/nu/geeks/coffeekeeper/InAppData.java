@@ -19,4 +19,7 @@ public class InAppData extends Application{
         recipes.add(recipe);
     }
 
+    public void setRecipes(ArrayList<Recipe> recipes){
+        this.recipes = recipes;
+    }
 }

@@ -38,6 +38,14 @@ public class CreateRecipe extends Activity {
 
         recipe = new Recipe();
 
+        tpBrew1.setCurrentMinute(0);
+        tpBrew1.setCurrentHour(0);
+        tpBrew2.setCurrentMinute(0);
+        tpBrew2.setCurrentHour(0);
+        tpBrew3.setCurrentMinute(0);
+        tpBrew3.setCurrentHour(0);
+
+
         setButtonListeners();
 
 
@@ -65,8 +73,8 @@ public class CreateRecipe extends Activity {
                     recipe.setComments("(Inga kommentarer)"); //No comment set, which is fine.
                 }
                 viewFlipper.showNext();
-            }
-        });
+    }
+});
 
         bS3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +141,10 @@ public class CreateRecipe extends Activity {
     private void setResultAndFinish() {
 
         ((InAppData) this.getApplication()).addRecipe(recipe);
+        Intent resultIntent = new Intent();
 
+        resultIntent.putExtra("recipeRequestCode", 1);
+        setResult(RESULT_OK, resultIntent);
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }

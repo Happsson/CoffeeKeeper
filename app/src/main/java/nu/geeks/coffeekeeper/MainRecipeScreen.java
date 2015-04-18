@@ -17,9 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -37,8 +39,9 @@ public class MainRecipeScreen extends Activity {
 
     private boolean hasPlayedSplash = false;
 
-    private final String savedRecipes = "saved_recipes";
+    // private final String savedRecipes = "saved_recipes";
     private final int splashRequestCode = 1;
+    private final int recipeRequestCode = 2;
 
     private final String[] SORTOPTIONS = {
             "Sortera efter namn",
@@ -52,76 +55,40 @@ public class MainRecipeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recipe_screen);
 
-
-        //Check if there are any saved instances of the recipe-list. If not, create a new empty
-        //list.
-        if(savedInstanceState == null){
-            recipes = ((InAppData) this.getApplication()).getRecipes();
-        }else{
-            //If there are a list saved, retrieve it as a string and convert it to a recipelist.
-            recipes = RecipeParser.readListString(savedInstanceState.getString(savedRecipes));
-
+        if(!readSavedData()) {
+            recipes = new ArrayList<Recipe>();
+            ((InAppData) this.getApplication()).setRecipes(recipes);
         }
 
         initializeView();
         initializeButton();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-
-        //Save the current recipelist when app closes. Convert it to a String and save it.
-        outState.putString(savedRecipes, RecipeParser.saveList(recipes));
-
-        super.onSaveInstanceState(outState);
-    }
 
     /**
      * This is the method that is called when the app comes back alive after when app i being
      * reopened.
-     *
+     * <p/>
      * Stuff is initialized here instead of in onCreate for this reason.
      */
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(recipes == null){
+        if (recipes == null) {
             Toast.makeText(getApplicationContext(), "I've missunderstood :(", Toast.LENGTH_LONG).show();
         }
 
         //Start splash-screen
-        if(!hasPlayedSplash) {
+        if (!hasPlayedSplash) {
             Intent intent = new Intent(this, SplashScreen.class);
             startActivityForResult(intent, splashRequestCode);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
+
         recipeAdapter.notifyDataSetChanged(); //Make sure recipe-list is up to date
     }
 
-    public String readSavedData ( ) {
-        StringBuffer datax = new StringBuffer("");
-        try {
-            FileInputStream fIn = openFileInput(savedRecipes) ;
-            InputStreamReader isr = new InputStreamReader ( fIn ) ;
-            BufferedReader buffreader = new BufferedReader ( isr ) ;
-
-            String readString = buffreader.readLine ( ) ;
-            while ( readString != null ) {
-                datax.append(readString);
-                readString = buffreader.readLine ( ) ;
-            }
-
-            isr.close ( ) ;
-        } catch ( IOException ioe ) {
-            Toast.makeText(getApplicationContext(), "Can't read internal storage", Toast.LENGTH_LONG).show();
-            ioe.printStackTrace ( ) ;
-        }
-        String returnString = datax.toString();
-        if(returnString.length() != 0) return returnString;
-        else return null;
-
-    }
 
     private void initializeButton() {
 
@@ -135,11 +102,11 @@ public class MainRecipeScreen extends Activity {
         sSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(sortOptions.get(position).equals(SORTOPTIONS[0])){ //SORTOPTION[0] == "Sort by name"
+                if (sortOptions.get(position).equals(SORTOPTIONS[0])) { //SORTOPTION[0] == "Sort by name"
                     recipeAdapter.sort(new RecipeNameComparator());
                     recipeAdapter.notifyDataSetChanged();
                 }
-                if(sortOptions.get(position).equals(SORTOPTIONS[1])){ // Sort by brewtime
+                if (sortOptions.get(position).equals(SORTOPTIONS[1])) { // Sort by brewtime
                     recipeAdapter.sort(new RecipeTimeComparator());
                     recipeAdapter.notifyDataSetChanged();
                 }
@@ -166,7 +133,7 @@ public class MainRecipeScreen extends Activity {
      *
      * @param index index of the recipe to load in main recipelist.
      */
-    private void openRecipe(int index){
+    private void openRecipe(int index) {
 
         Intent intent = new Intent(this, RecipeScreen.class);
         intent.putExtra("ReceivedRecipe", index);
@@ -177,11 +144,11 @@ public class MainRecipeScreen extends Activity {
     private void createRecipe() {
 
         Intent intent = new Intent(this, CreateRecipe.class);
-        startActivity(intent);
+        startActivityForResult(intent, recipeRequestCode);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    private void initializeView(){
+    private void initializeView() {
         bAddRecipe = (Button) findViewById(R.id.bNewRecipe);
         listRecipes = (ListView) findViewById(R.id.listRecipes);
         sSort = (Spinner) findViewById(R.id.sSort);
@@ -189,7 +156,7 @@ public class MainRecipeScreen extends Activity {
         sortOptions = new ArrayList<String>();
 
         //Add sortoptions
-        for(int i = 0; i < SORTOPTIONS.length; i++){
+        for (int i = 0; i < SORTOPTIONS.length; i++) {
             sortOptions.add(SORTOPTIONS[i]);
         }
 
@@ -200,7 +167,7 @@ public class MainRecipeScreen extends Activity {
         sSort.setAdapter(sortAdapter);
 
         recipeAdapter = new ArrayAdapter<Recipe>(this, android.R.layout.simple_list_item_2,
-                android.R.id.text1, recipes){
+                android.R.id.text1, recipes) {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -224,8 +191,12 @@ public class MainRecipeScreen extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == splashRequestCode){
+        if (requestCode == splashRequestCode) {
             hasPlayedSplash = true;
+        }
+        if (requestCode == recipeRequestCode) {
+           recipes = ((InAppData) this.getApplication()).getRecipes();
+           recipeAdapter.notifyDataSetChanged();
         }
     }
 
@@ -236,20 +207,49 @@ public class MainRecipeScreen extends Activity {
         super.onStop();
     }
 
-    private void saveData() {
-        //Save recipe list
-        String recipeString = RecipeParser.saveList(recipes);
+
+    public void saveData() {
+        //Convert recipe to string with RecipeParser.
+        String recipeString = RecipeParser.listToString(recipes);
+
 
         try {
-            FileOutputStream fos = openFileOutput(savedRecipes, Context.MODE_PRIVATE);
-            fos.write(recipeString.getBytes());
-            fos.close();
-        } catch (FileNotFoundException e) {
-            Toast.makeText(getApplicationContext(), "Can't find file", Toast.LENGTH_LONG).show();
+            //Create a file coffee.txt in the root of the internal storage for this app.
+            File gpxfile = new File(getApplicationContext().getFilesDir(), "coffee.txt");
+            FileWriter writer = new FileWriter(gpxfile);
+            //Write recipe string to the file. Close and flush outputstream.
+            writer.append(recipeString);
+            writer.flush();
+            writer.close();
 
-        } catch (IOException e) {
-            Toast.makeText(getApplicationContext(), "Can't write to file", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error writing to file", Toast
+                    .LENGTH_LONG).show();
         }
+    }
+
+    public boolean readSavedData() {
+
+
+        String inputString;
+        try {
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(
+                    openFileInput("coffee.txt")
+            ));
+            inputString = inputReader.readLine();
+
+        } catch (FileNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        recipes = RecipeParser.readListString(inputString);
+        ((InAppData) this.getApplication()).setRecipes(recipes);
+        return true;
     }
 
 

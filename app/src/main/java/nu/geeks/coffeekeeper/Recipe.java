@@ -73,13 +73,8 @@ public class Recipe {
      * @param brewTime
      */
     public void setBrewTime(int brewTime){
-        //if index is larger than size, then just add element
-        //if(index>this.brewTime.size()) {
-            this.brewTime.add(brewTime);
-        //}else{      //else remove previous entry then add current element
-         //   this.brewTime.remove(index);
-          //  this.brewTime.add(index,brewTime);
-        //}
+      this.brewTime.add(brewTime);
+
     }
 
     public void setKindCoffe(String kindCoffe){
@@ -112,7 +107,7 @@ public class Recipe {
     }
 
     public ArrayList<Integer> getBrewTime(){
-        return new ArrayList<Integer>(brewTime);
+        return brewTime;
     }
 
     public int getTotalTime(){

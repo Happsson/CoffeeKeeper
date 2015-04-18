@@ -23,14 +23,12 @@ public class RecipeParser {
      * @param recipeList the list to convert
      * @return the string generated
      */
-    public static String saveList(ArrayList<Recipe> recipeList){
+    public static String listToString(ArrayList<Recipe> recipeList){
         String dataString = "";
 
         for(Recipe recipe : recipeList) {
             dataString += saveRecipe(recipe);
         }
-
-        //TODO - save this string on phone
 
         return dataString;
     }
@@ -83,6 +81,7 @@ public class RecipeParser {
      */
     public static String saveRecipe(Recipe recipe){
         String dataString = "";
+        ArrayList<Integer> brewTime = recipe.getBrewTime();
         //Using symbol € and % as identifiers. Not likely to be used by user.
         dataString += "€" + recipe.getName() + "€";
         dataString += "€" + recipe.getComments() + "€";
@@ -90,7 +89,9 @@ public class RecipeParser {
         dataString += "€" + recipe.getAmountCoffe() + "€";
         dataString += "€" + recipe.getAmountWater() + "€";
         dataString += "€" + recipe.getGrind() + "€";
-        dataString += "€" + recipe.getBrewTime().get(0) + "€"; //TODO - again, need to be able to handle more times.
+        dataString += "€" + brewTime.get(0) + "€";
+        dataString += "€" + brewTime.get(1) + "€";
+        dataString += "€" + brewTime.get(2) + "€";
         dataString += "€" + recipe.getTemp() + "€%"; //note end sign, '%'
 
         return dataString;
@@ -154,9 +155,15 @@ public class RecipeParser {
                 recipe.setGrind(Integer.parseInt(read));
                 break;
             case 6:
-                recipe.setBrewTime(Integer.parseInt(read)); //TODO - more than one brew time
+                recipe.setBrewTime(Integer.parseInt(read));
                 break;
             case 7:
+                recipe.setBrewTime(Integer.parseInt(read));
+                break;
+            case 8:
+                recipe.setBrewTime(Integer.parseInt(read));
+                break;
+            case 9:
                 recipe.setTemp(Integer.parseInt(read));
                 break;
             default:

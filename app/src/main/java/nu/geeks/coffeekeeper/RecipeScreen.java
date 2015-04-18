@@ -148,8 +148,8 @@ public class RecipeScreen extends Activity {
     }
 
     private void InitializeView() {
-        tSetName = (TextView) findViewById(R.id.tSetName);
-        tSetComment = (TextView) findViewById(R.id.tSetComment);
+        tSetName        =             (TextView) findViewById(R.id.tSetName);
+        tSetComment     =               (TextView) findViewById(R.id.tSetComment);
         tSetCoffeetype  = (TextView) findViewById(R.id.tSetCoffe);
         tSetCoffeeAmount  = (TextView) findViewById(R.id.tSetCoffeAmount);
         tSetWaterAmount  = (TextView) findViewById(R.id.tSetWaterAmount);
