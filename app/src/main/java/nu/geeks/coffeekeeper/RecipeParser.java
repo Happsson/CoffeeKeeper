@@ -16,8 +16,7 @@ public class RecipeParser {
      *      "€(name)€€(comment)€€(Coffee type)€€(Coffee amount)
      *      €€(Water amount)€€(Grind setting)€€(Brew time)€€(Temperature)"
      *
-     *      where the 0 is the index. The same pattern will repeat with the next index.
-     *      No spaces or new lines are used.
+     *      The same pattern will repeat with the next index.
      *
      *
      * @param recipeList the list to convert
@@ -26,11 +25,13 @@ public class RecipeParser {
     public static String listToString(ArrayList<Recipe> recipeList){
         String dataString = "";
 
+        if(recipeList.size() == 0) return "";
+
         for(Recipe recipe : recipeList) {
             dataString += saveRecipe(recipe);
         }
 
-        return dataString;
+        return dataString + "\n";
     }
 
 
@@ -103,7 +104,7 @@ public class RecipeParser {
      *
      *
      * @param inputString
-     * @return
+     * @return recipe
      */
     public static Recipe readRecipeString(String inputString){
         Recipe recipe = new Recipe();

@@ -1,11 +1,14 @@
 package nu.geeks.coffeekeeper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,6 +39,12 @@ public class MainRecipeScreen extends Activity {
     private ArrayList<String> sortOptions;
     private ArrayList<Recipe> recipes;
     private ArrayAdapter<Recipe> recipeAdapter;
+
+    //used to detect swipe on listItem
+    float xUp;
+    float xPush;
+
+    boolean deleteRecipe = false;
 
     private boolean hasPlayedSplash = false;
 
@@ -75,10 +84,6 @@ public class MainRecipeScreen extends Activity {
     protected void onResume() {
         super.onResume();
 
-        if (recipes == null) {
-            Toast.makeText(getApplicationContext(), "I've missunderstood :(", Toast.LENGTH_LONG).show();
-        }
-
         //Start splash-screen
         if (!hasPlayedSplash) {
             Intent intent = new Intent(this, SplashScreen.class);
@@ -98,6 +103,8 @@ public class MainRecipeScreen extends Activity {
                 createRecipe();
             }
         });
+
+
 
         sSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -119,12 +126,64 @@ public class MainRecipeScreen extends Activity {
             }
         });
 
-        listRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /**Touch is called before click.
+         * For this reason, it is possible to check for a swipe to the right here,
+         * and if detected, deleteRecipe can be set to true before
+         * the click of a recipe is registered.
+         *
+         */
+
+        listRecipes.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openRecipe(position);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    xPush = event.getRawX();
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    xUp = event.getRawX();
+                    checkMovement();
+                }
+
+                return false;
             }
         });
+
+        /**
+         *
+         */
+        listRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                if(!deleteRecipe){
+                    openRecipe(position);
+                }
+                else{
+                    new AlertDialog.Builder(MainRecipeScreen.this)
+                            .setTitle("Ta bort?")
+                            .setMessage("Vill du ta bort receptet " + recipes.get(position).name +" från listan?")
+                            .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    recipes.remove(position);
+                                    recipeAdapter.notifyDataSetChanged();
+                                    saveData();
+                                }
+                            })
+                            .setNegativeButton("Nej", null)
+                            .show();
+                deleteRecipe = false;
+                }
+            }
+        });
+    }
+
+    /**
+     * Is called when the user has touched the listView.
+     * Will set deleteRecipe to true if user swiped right
+     */
+    private void checkMovement() {
+        if(xUp-xPush>100) deleteRecipe = true;
+        else deleteRecipe = false;
     }
 
     /**
@@ -200,27 +259,41 @@ public class MainRecipeScreen extends Activity {
         }
     }
 
-
     @Override
-    protected void onStop() {
+    protected void onPause() {
+        super.onPause();
         saveData();
-        super.onStop();
     }
 
 
+    /**
+     * Saves the recipe list on the internal storage of the phone.
+     * If there are no recipes (for example, user has deleted all recipes
+     * that was there from before), the file will be deleted to make sure
+     * that the readSavedData() get's a null file when trying to read.
+     * That's one of the ways it tells that there are no current recipes, and
+     * a new recipelist needs to be created.
+     *
+     */
     public void saveData() {
         //Convert recipe to string with RecipeParser.
         String recipeString = RecipeParser.listToString(recipes);
 
-
         try {
             //Create a file coffee.txt in the root of the internal storage for this app.
+
             File gpxfile = new File(getApplicationContext().getFilesDir(), "coffee.txt");
-            FileWriter writer = new FileWriter(gpxfile);
-            //Write recipe string to the file. Close and flush outputstream.
-            writer.append(recipeString);
-            writer.flush();
-            writer.close();
+            if(recipeString == null){
+                gpxfile.delete();
+            }else {
+
+                FileWriter writer = new FileWriter(gpxfile, false); //False is weather or not to append to file. Delete it! KILL IT WITH FIRE!
+                //Write recipe string to the file. Close and flush outputstream.
+
+                writer.append(recipeString);
+                writer.flush();
+                writer.close();
+            }
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Error writing to file", Toast
@@ -228,9 +301,16 @@ public class MainRecipeScreen extends Activity {
         }
     }
 
+    /**
+     * Reads the saved data from internal storage. Returns true if the read was successful.
+     * Successful in this instance means both that it was able to find and read the file,
+     * and the file contained at least one recipe.
+     *
+     * Returns false otherwise
+     *
+     * @return
+     */
     public boolean readSavedData() {
-
-
         String inputString;
         try {
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(
@@ -241,13 +321,14 @@ public class MainRecipeScreen extends Activity {
         } catch (FileNotFoundException e) {
             Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_LONG).show();
             e.printStackTrace();
-            return false;
+            return false; //False, file not found.
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //False, couldn't read file
             return false;
         }
 
-        recipes = RecipeParser.readListString(inputString);
+        if(inputString != null) recipes = RecipeParser.readListString(inputString);
+        else return false; //False, file found and readable, but empty.
         ((InAppData) this.getApplication()).setRecipes(recipes);
         return true;
     }
