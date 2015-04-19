@@ -68,6 +68,7 @@ public class RecipeParser {
                 recipeList.add(recipe);
                 value = 0;
                 read = "";
+                recipe = new Recipe();
             }
         }
         return recipeList;

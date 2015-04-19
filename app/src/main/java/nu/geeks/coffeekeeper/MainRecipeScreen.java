@@ -270,7 +270,7 @@ public class MainRecipeScreen extends Activity {
      * Saves the recipe list on the internal storage of the phone.
      * If there are no recipes (for example, user has deleted all recipes
      * that was there from before), the file will be deleted to make sure
-     * that the readSavedData() get's a null file when trying to read.
+     * that the readSavedData() gets a null file when trying to read.
      * That's one of the ways it tells that there are no current recipes, and
      * a new recipelist needs to be created.
      *
