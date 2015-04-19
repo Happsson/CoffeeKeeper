@@ -1,11 +1,19 @@
 package nu.geeks.coffeekeeper;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -30,19 +38,27 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
-public class MainRecipeScreen extends Activity {
+public class MainRecipeScreen extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private int CREATE_RECIPE = 1234;
-    private Button bAddRecipe;
+    //private Button bAddRecipe;
     private ListView listRecipes;
-    private Spinner sSort;
-    private ArrayList<String> sortOptions;
+    //private Spinner sSort;
+    //private ArrayList<String> sortOptions;
     private ArrayList<Recipe> recipes;
     private ArrayAdapter<Recipe> recipeAdapter;
+
+    private Typeface bebas;
+    private Typeface futuraBookOblique;
+    private Typeface futuraLightOblique;
 
     //used to detect swipe on listItem
     float xUp;
     float xPush;
+
+    private CharSequence mTitle;
 
     boolean deleteRecipe = false;
 
@@ -64,10 +80,27 @@ public class MainRecipeScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recipe_screen);
 
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+
         if(!readSavedData()) {
             recipes = new ArrayList<Recipe>();
             ((InAppData) this.getApplication()).setRecipes(recipes);
         }
+
+
+
+        bebas = Typeface.createFromAsset(getAssets(), "fonts/bebas.ttf");
+        futuraBookOblique = Typeface.createFromAsset(getAssets(), "fonts/futurabookob.otf");
+        futuraLightOblique = Typeface.createFromAsset(getAssets(), "fonts/futuralightob.otf");
 
         initializeView();
         initializeButton();
@@ -97,7 +130,9 @@ public class MainRecipeScreen extends Activity {
 
     private void initializeButton() {
 
+        /*
         bAddRecipe.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 createRecipe();
@@ -125,7 +160,7 @@ public class MainRecipeScreen extends Activity {
 
             }
         });
-
+        */
         /**Touch is called before click.
          * For this reason, it is possible to check for a swipe to the right here,
          * and if detected, deleteRecipe can be set to true before
@@ -208,11 +243,15 @@ public class MainRecipeScreen extends Activity {
     }
 
     private void initializeView() {
-        bAddRecipe = (Button) findViewById(R.id.bNewRecipe);
+        //bAddRecipe = (Button) findViewById(R.id.bNewRecipe);
         listRecipes = (ListView) findViewById(R.id.listRecipes);
-        sSort = (Spinner) findViewById(R.id.sSort);
+        //sSort = (Spinner) findViewById(R.id.sSort);
+
+
+        /*
 
         sortOptions = new ArrayList<String>();
+
 
         //Add sortoptions
         for (int i = 0; i < SORTOPTIONS.length; i++) {
@@ -225,6 +264,7 @@ public class MainRecipeScreen extends Activity {
         sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sSort.setAdapter(sortAdapter);
 
+        */
         recipeAdapter = new ArrayAdapter<Recipe>(this, android.R.layout.simple_list_item_2,
                 android.R.id.text1, recipes) {
 
@@ -234,6 +274,10 @@ public class MainRecipeScreen extends Activity {
 
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                text1.setTypeface(futuraBookOblique);
+                text2.setTypeface(futuraLightOblique);
+                text1.setTextColor(Color.WHITE);
+                text2.setTextColor(Color.WHITE);
 
                 text1.setText(recipes.get(position).getName());
                 text2.setText(recipes.get(position).getComments());
@@ -334,11 +378,13 @@ public class MainRecipeScreen extends Activity {
     }
 
 
+
     //TODO - add menu buttons
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_recipe_screen, menu);
+        restoreActionBar();
         return true;
     }
 
@@ -350,7 +396,73 @@ public class MainRecipeScreen extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.action_add){
+            createRecipe();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .commit();
+    }
+
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+
+        actionBar.setIcon(
+                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
+
+        int titleId = getResources().getIdentifier("action_bar_title", "id",
+                "android");
+        TextView titleText = (TextView) findViewById(titleId);
+        titleText.setTypeface(bebas);
+        titleText.setPadding(10, 0, 0, 0);
+        titleText.setTextColor(Color.WHITE);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            return rootView;
+        }
+
     }
 }
