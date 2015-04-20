@@ -33,8 +33,13 @@ import android.widget.Toast;
 public class NavigationDrawerFragment extends Fragment {
 
 
-    private Typeface bebas;
+
     String[] options = {"Hitta", "Favoriter", "Sortera"};
+    int[] imageId = {
+            R.drawable.button_plus,
+            R.drawable.button_plus,
+            R.drawable.button_plus
+    };
 
     /**
      * Remember the position of the selected item.
@@ -72,7 +77,6 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bebas = Typeface.createFromAsset(getActivity().getAssets(), "fonts/bebas.ttf");
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -98,31 +102,23 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        CustomListView mdrawerAdapter = new CustomListView(getActivity(), options, imageId);
+
+
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+
+
+
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,options
-                ){
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
 
-                View view = super.getView(position, convertView, parent);
-
-                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-                text1.setTypeface(bebas);
-                text1.setTextColor(Color.WHITE);
-                return view;
-
-            }
-        });
+        mDrawerListView.setAdapter(mdrawerAdapter);
 
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

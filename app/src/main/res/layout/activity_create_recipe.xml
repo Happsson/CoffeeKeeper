@@ -31,7 +31,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next"
                 />
 
             <TextView
@@ -70,7 +69,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next"
 
 />
 
@@ -110,7 +108,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next" />
+            />
 
             <TextView
                 android:id="@+id/tCoffeetype"
@@ -148,7 +146,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next" />
+                />
 
             <TextView
                 android:id="@+id/tCoffeeamount"
@@ -183,7 +181,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next" />
+                />
 
             <TextView
                 android:id="@+id/tWaterAmount"
@@ -218,7 +216,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next" />
+            />
 
             <TextView
                 android:id="@+id/tGrindsetting"
@@ -251,7 +249,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next"/>
+            />
 
             <TextView
                 android:id="@+id/tTemp"
@@ -286,7 +284,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/next" />
+                />
 
             <TextView
                 android:id="@+id/tBrewttimers"
