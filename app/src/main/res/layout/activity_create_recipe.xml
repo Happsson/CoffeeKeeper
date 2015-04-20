@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg"
+    android:background="@drawable/main_bg2"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -21,7 +21,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v1"
             >
 
@@ -32,7 +31,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next"
+                />
 
             <TextView
                 android:id="@+id/tName"
@@ -41,6 +41,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="68dp"
+                android:textColor="@android:color/white"
                 android:text="Vad ska ditt recept heta?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -50,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="200dp"
+                android:textColor="@android:color/white"
                 android:imeOptions="actionDone"
                 android:singleLine="true" />
 
@@ -59,7 +61,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v2">
 
             <Button
@@ -69,7 +70,9 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next"
+
+/>
 
             <TextView
                 android:id="@+id/tComment"
@@ -78,6 +81,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
+                android:textColor="@android:color/white"
                 android:text="Lägg till en kommentar,\n om du vill."
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -87,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="200dp"
+                android:textColor="@android:color/white"
                 android:imeOptions="actionDone"
                 android:singleLine="true" />
 
@@ -96,7 +101,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v3">
 
             <Button
@@ -106,7 +110,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next" />
 
             <TextView
                 android:id="@+id/tCoffeetype"
@@ -115,6 +119,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="68dp"
+                android:textColor="@android:color/white"
                 android:text="Vilket slags kaffe?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -123,6 +128,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:textColor="@android:color/white"
                 android:layout_marginTop="200dp"
                 android:imeOptions="actionDone"
                 android:singleLine="true" />
@@ -133,7 +139,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v4">
 
             <Button
@@ -143,7 +148,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next" />
 
             <TextView
                 android:id="@+id/tCoffeeamount"
@@ -151,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
                 android:layout_marginTop="68dp"
                 android:text="Kaffemängd? (i gram)"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -168,7 +174,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v5">
 
             <Button
@@ -178,16 +183,17 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next" />
 
             <TextView
                 android:id="@+id/tWaterAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:textColor="@android:color/white"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="68dp"
-                android:text="Vattenmängd? (i dl)"
+                android:text="Vattenmängd? (i cl)"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <NumberPicker
@@ -203,7 +209,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v6">
 
             <Button
@@ -213,7 +218,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next" />
 
             <TextView
                 android:id="@+id/tGrindsetting"
@@ -221,6 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
                 android:layout_marginTop="68dp"
                 android:text="Inställning på kaffemal?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -236,7 +242,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v7">
 
             <Button
@@ -246,13 +251,14 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next"/>
 
             <TextView
                 android:id="@+id/tTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:textColor="@android:color/white"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="68dp"
                 android:text="Temperatur?"
@@ -271,7 +277,6 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/box_bg"
             android:id="@+id/v8">
 
             <Button
@@ -281,7 +286,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:text="Spara" />
+                android:background="@drawable/next" />
 
             <TextView
                 android:id="@+id/tBrewttimers"
@@ -289,6 +294,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
                 android:layout_marginTop="50dp"
                 android:text="Ställin upp till\ntre bryggtider"
                 android:textAppearance="?android:attr/textAppearanceLarge" />

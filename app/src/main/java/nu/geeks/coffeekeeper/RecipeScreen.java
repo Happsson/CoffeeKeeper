@@ -3,6 +3,7 @@ package nu.geeks.coffeekeeper;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -19,6 +20,10 @@ public class RecipeScreen extends Activity {
 
     Recipe recipe;
 
+    private Typeface bebas;
+    private Typeface futuraBookOblique;
+    private Typeface futuraLightOblique;
+
     int currentTimer = 0;
     boolean timerAccessible = false;
 
@@ -31,6 +36,10 @@ public class RecipeScreen extends Activity {
 
         Bundle b = getIntent().getExtras();
         int index = b.getInt("ReceivedRecipe");
+
+        bebas = Typeface.createFromAsset(getAssets(), "fonts/bebas.ttf");
+        futuraBookOblique = Typeface.createFromAsset(getAssets(), "fonts/futurabookob.otf");
+        futuraLightOblique = Typeface.createFromAsset(getAssets(), "fonts/futuralightob.otf");
 
         recipe = ((InAppData) this.getApplication()).getRecipes().get(index);
         InitializeView();
@@ -129,6 +138,8 @@ public class RecipeScreen extends Activity {
     }
 
     private void setTexts() {
+
+
         tSetName.setText(recipe.getName());
         tSetComment.setText(recipe.getComments());
         tSetCoffeetype.setText(recipe.getKindCoffe());
@@ -141,6 +152,21 @@ public class RecipeScreen extends Activity {
         tSetBT2.setText(secondsToString(recipe.getBrewTime().get(1)));
         tSetBT3.setText(secondsToString(recipe.getBrewTime().get(2)));
         tSetTimer.setText("00:00");
+
+        tSetComment.setText(recipe.getComments());
+        tSetCoffeetype.setText(recipe.getKindCoffe());
+        tSetCoffeeAmount.setText(""+recipe.getAmountCoffe());
+        tSetWaterAmount.setText(""+recipe.getAmountWater());
+        tSetGrind.setText(""+recipe.getGrind());
+        tSettemperature.setText(""+recipe.getTemp());
+
+        tSetBT1.setText(secondsToString(recipe.getBrewTime().get(0)));
+        tSetBT2.setText(secondsToString(recipe.getBrewTime().get(1)));
+        tSetBT3.setText(secondsToString(recipe.getBrewTime().get(2)));
+        tSetTimer.setText("00:00");
+        tSetTimer.setTypeface(bebas);
+
+
     }
 
     private String secondsToString(int pTime) {
@@ -166,8 +192,7 @@ public class RecipeScreen extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_recipe_screen, menu);
-        return true;
+        return false;
     }
 
     @Override
