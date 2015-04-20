@@ -34,12 +34,15 @@ public class NavigationDrawerFragment extends Fragment {
 
 
 
-    String[] options = {"Hitta", "Favoriter", "Sortera"};
+    String[] options = {"Favourites", "Timer", "Search", "Sort"};
     int[] imageId = {
-            R.drawable.button_plus,
-            R.drawable.button_plus,
-            R.drawable.button_plus
+            R.drawable.fav,
+            R.drawable.timer,
+            R.drawable.search,
+            R.drawable.sort
     };
+
+    Typeface bebas;
 
     /**
      * Remember the position of the selected item.
@@ -83,6 +86,8 @@ public class NavigationDrawerFragment extends Fragment {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
+        bebas = Typeface.createFromAsset(getActivity().getAssets(), "fonts/bebas.ttf");
+
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
@@ -91,6 +96,8 @@ public class NavigationDrawerFragment extends Fragment {
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
     }
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -103,7 +110,7 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        CustomListView mdrawerAdapter = new CustomListView(getActivity(), options, imageId);
+        CustomListView mdrawerAdapter = new CustomListView(getActivity(), options, imageId, bebas);
 
 
         mDrawerListView = (ListView) inflater.inflate(

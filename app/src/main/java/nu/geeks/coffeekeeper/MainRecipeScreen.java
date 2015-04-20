@@ -42,6 +42,10 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
 
     //TODO - What should be on the drawer menu? A custom timer?
 
+    //TODO - change language in UI to English
+
+    //When list is empty, set a ImageView with an arrow to the new recipe button
+
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private int CREATE_RECIPE = 1234;
@@ -85,6 +89,7 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -365,7 +370,7 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
             inputString = inputReader.readLine();
 
         } catch (FileNotFoundException e) {
-            Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return false; //False, file not found.
         } catch (IOException e) {

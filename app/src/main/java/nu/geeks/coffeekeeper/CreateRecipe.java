@@ -19,6 +19,8 @@ import android.widget.ViewFlipper;
 public class CreateRecipe extends Activity {
 
     //TODO - Should this, and all screens, have the menu? In that case, what should be on it?
+    //TODO - Change to editText with time-setting.
+    //TODO - Add names to brew times
 
     private Recipe recipe;
 
