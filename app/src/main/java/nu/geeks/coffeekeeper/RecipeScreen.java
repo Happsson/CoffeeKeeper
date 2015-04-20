@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 public class RecipeScreen extends Activity {
 
+    //TODO - add notification when timer is done. Add sound? Make timer keep going, to tell how much off you are in the recipe?
+
     TextView tSetName, tSetComment, tSetCoffeetype, tSetCoffeeAmount, tSetWaterAmount, tSetGrind,
     tSettemperature, tSetBT1, tSetBT2, tSetBT3, tSetTimer;
 

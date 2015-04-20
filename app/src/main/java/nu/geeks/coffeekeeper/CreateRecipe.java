@@ -18,6 +18,8 @@ import android.widget.ViewFlipper;
 
 public class CreateRecipe extends Activity {
 
+    //TODO - Should this, and all screens, have the menu? In that case, what should be on it?
+
     private Recipe recipe;
 
     private int CREATE_RECIPE = 1234;

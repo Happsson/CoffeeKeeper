@@ -40,6 +40,8 @@ import java.util.ArrayList;
 
 public class MainRecipeScreen extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
+    //TODO - What should be on the drawer menu? A custom timer?
+
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private int CREATE_RECIPE = 1234;
