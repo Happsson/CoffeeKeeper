@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,9 +23,13 @@ import android.widget.ViewFlipper;
 import java.util.ArrayList;
 
 
-public class CreateRecipe extends Activity {
+public class CreateRecipe extends BaseActivity  {
 
     //TODO - Should this, and all screens, have the menu? In that case, what should be on it?
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle;
+
 
     private Recipe recipe;
 
@@ -42,6 +47,16 @@ public class CreateRecipe extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_recipe);
+
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         futuraBookOblique = Typeface.createFromAsset(getAssets(), "fonts/futurabookob.otf");
         futuraLightOblique = Typeface.createFromAsset(getAssets(), "fonts/futuralightob.otf");
@@ -87,20 +102,33 @@ public class CreateRecipe extends Activity {
     private void setResultAndFinish() {
 
         recipe.setName(eName.getText().toString());
-        recipe.setComments(eComment.getText().toString());
-        recipe.setKindCoffe(eCoffeeType.getText().toString());
-        recipe.setTemp(Integer.parseInt(npTemp.getText().toString()));
-        recipe.setAmmountWater(Integer.parseInt(npWater.getText().toString()));
-        recipe.setAmountCoffe((Integer.parseInt(npCoffee.getText().toString())));
-        recipe.setGrind(Integer.parseInt(npGrind.getText().toString()));
+        if(eComment.getText().toString().length()>0) recipe.setComments(eComment.getText().toString());
+        if(eCoffeeType.getText().toString().length()>0) recipe.setKindCoffe(eCoffeeType.getText().toString());
+        if(npTemp.getText().toString().length()>0) recipe.setTemp(Integer.parseInt(npTemp.getText().toString()));
+        if(npWater.getText().toString().length()>0) recipe.setAmmountWater(Integer.parseInt(npWater.getText().toString()));
+        if(npCoffee.getText().toString().length()>0) recipe.setAmountCoffe((Integer.parseInt(npCoffee.getText().toString())));
+        if(npGrind.getText().toString().length()>0) recipe.setGrind(Integer.parseInt(npGrind.getText().toString()));
 
         recipe.setBrewTime(timeChecker(tpBrew1));
         recipe.setBrewTime(timeChecker(tpBrew2));
         recipe.setBrewTime(timeChecker(tpBrew3));
 
-        recipe.addBrewComments(tpCBrew1.getText().toString());
-        recipe.addBrewComments(tpCBrew2.getText().toString());
-        recipe.addBrewComments(tpCBrew3.getText().toString());
+        if(tpCBrew1.getText().toString().length()>0){
+            recipe.addBrewComments(tpCBrew1.getText().toString());
+        }else{
+            recipe.addBrewComments(" ");
+        }
+        if(tpCBrew2.getText().toString().length()>0){
+                recipe.addBrewComments(tpCBrew2.getText().toString());
+        }else{
+            recipe.addBrewComments(" ");
+        }
+
+        if(tpCBrew3.getText().toString().length()>0){
+                    recipe.addBrewComments(tpCBrew3.getText().toString());
+        }else{
+            recipe.addBrewComments(" ");
+        }
 
 
         ((InAppData) this.getApplication()).addRecipe(recipe);

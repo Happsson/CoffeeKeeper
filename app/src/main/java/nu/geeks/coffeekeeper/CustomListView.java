@@ -45,6 +45,7 @@ public class CustomListView extends ArrayAdapter<String> {
 
         listItem.setText(listText[position]);
         imageView.setImageResource(imageId[position]);
+
         return rowView;
     }
 

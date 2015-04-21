@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -38,15 +39,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
-public class MainRecipeScreen extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
+public class MainRecipeScreen extends BaseActivity {
 
     //TODO - What should be on the drawer menu? A custom timer?
 
     //TODO - change language in UI to English
 
-    //When list is empty, set a ImageView with an arrow to the new recipe button
+    //TODO - When list is empty, set a ImageView with an arrow to the new recipe button
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle;
 
     private int CREATE_RECIPE = 1234;
     //private Button bAddRecipe;
@@ -63,8 +65,6 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
     //used to detect swipe on listItem
     float xUp;
     float xPush;
-
-    private CharSequence mTitle;
 
     boolean deleteRecipe = false;
 
@@ -90,27 +90,25 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-
-
-        if(!readSavedData()) {
+        if (!readSavedData()) {
             recipes = new ArrayList<Recipe>();
             ((InAppData) this.getApplication()).setRecipes(recipes);
         }
-
 
 
         bebas = Typeface.createFromAsset(getAssets(), "fonts/bebas.ttf");
         futuraBookOblique = Typeface.createFromAsset(getAssets(), "fonts/futurabookob.otf");
         futuraLightOblique = Typeface.createFromAsset(getAssets(), "fonts/futuralightob.otf");
 
+
         initializeView();
         initializeButton();
+
     }
 
 
@@ -137,37 +135,7 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
 
     private void initializeButton() {
 
-        /*
-        bAddRecipe.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                createRecipe();
-            }
-        });
-
-
-
-        sSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (sortOptions.get(position).equals(SORTOPTIONS[0])) { //SORTOPTION[0] == "Sort by name"
-                    recipeAdapter.sort(new RecipeNameComparator());
-                    recipeAdapter.notifyDataSetChanged();
-                }
-                if (sortOptions.get(position).equals(SORTOPTIONS[1])) { // Sort by brewtime
-                    recipeAdapter.sort(new RecipeTimeComparator());
-                    recipeAdapter.notifyDataSetChanged();
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        */
         /**Touch is called before click.
          * For this reason, it is possible to check for a swipe to the right here,
          * and if detected, deleteRecipe can be set to true before
@@ -196,13 +164,12 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
         listRecipes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if(!deleteRecipe){
+                if (!deleteRecipe) {
                     openRecipe(position);
-                }
-                else{
+                } else {
                     new AlertDialog.Builder(MainRecipeScreen.this)
                             .setTitle("Ta bort?")
-                            .setMessage("Vill du ta bort receptet " + recipes.get(position).name +" från listan?")
+                            .setMessage("Vill du ta bort receptet " + recipes.get(position).name + " från listan?")
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -213,7 +180,7 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
                             })
                             .setNegativeButton("Nej", null)
                             .show();
-                deleteRecipe = false;
+                    deleteRecipe = false;
                 }
             }
         });
@@ -224,7 +191,7 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
      * Will set deleteRecipe to true if user swiped right
      */
     private void checkMovement() {
-        if(xUp-xPush>100) deleteRecipe = true;
+        if (xUp - xPush > 100) deleteRecipe = true;
         else deleteRecipe = false;
     }
 
@@ -250,28 +217,8 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
     }
 
     private void initializeView() {
-        //bAddRecipe = (Button) findViewById(R.id.bNewRecipe);
         listRecipes = (ListView) findViewById(R.id.listRecipes);
-        //sSort = (Spinner) findViewById(R.id.sSort);
 
-
-        /*
-
-        sortOptions = new ArrayList<String>();
-
-
-        //Add sortoptions
-        for (int i = 0; i < SORTOPTIONS.length; i++) {
-            sortOptions.add(SORTOPTIONS[i]);
-        }
-
-        //Create and populate sorting dropdown menu
-
-        ArrayAdapter<String> sortAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sortOptions);
-        sortAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sSort.setAdapter(sortAdapter);
-
-        */
         recipeAdapter = new ArrayAdapter<Recipe>(this, android.R.layout.simple_list_item_2,
                 android.R.id.text1, recipes) {
 
@@ -305,8 +252,8 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
             hasPlayedSplash = true;
         }
         if (requestCode == recipeRequestCode) {
-           recipes = ((InAppData) this.getApplication()).getRecipes();
-           recipeAdapter.notifyDataSetChanged();
+            recipes = ((InAppData) this.getApplication()).getRecipes();
+            recipeAdapter.notifyDataSetChanged();
         }
     }
 
@@ -324,7 +271,6 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
      * that the readSavedData() gets a null file when trying to read.
      * That's one of the ways it tells that there are no current recipes, and
      * a new recipelist needs to be created.
-     *
      */
     public void saveData() {
         //Convert recipe to string with RecipeParser.
@@ -334,9 +280,9 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
             //Create a file coffee.txt in the root of the internal storage for this app.
 
             File gpxfile = new File(getApplicationContext().getFilesDir(), "coffee.txt");
-            if(recipeString == null){
+            if (recipeString == null) {
                 gpxfile.delete();
-            }else {
+            } else {
 
                 FileWriter writer = new FileWriter(gpxfile, false); //False is weather or not to append to file. Delete it! KILL IT WITH FIRE!
                 //Write recipe string to the file. Close and flush outputstream.
@@ -356,7 +302,7 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
      * Reads the saved data from internal storage. Returns true if the read was successful.
      * Successful in this instance means both that it was able to find and read the file,
      * and the file contained at least one recipe.
-     *
+     * <p/>
      * Returns false otherwise
      *
      * @return
@@ -378,13 +324,31 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
             return false;
         }
 
-        if(inputString != null) recipes = RecipeParser.readListString(inputString);
-        else return false; //False, file found and readable, but empty.
+        if (inputString != null) {
+            recipes = RecipeParser.readListString(inputString);
+        } else return false; //False, file found and readable, but empty.
         ((InAppData) this.getApplication()).setRecipes(recipes);
         return true;
     }
 
 
+    public void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        //actionBar.setTitle(mTitle);
+
+        actionBar.setIcon(
+                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
+
+        int titleId = getResources().getIdentifier("action_bar_title", "id",
+                "android");
+        TextView titleText = (TextView) findViewById(titleId);
+        titleText.setTypeface(bebas);
+        titleText.setPadding(10, 0, 0, 0);
+        titleText.setTextColor(Color.WHITE);
+    }
 
     //TODO - add menu buttons
     @Override
@@ -403,73 +367,13 @@ public class MainRecipeScreen extends Activity implements NavigationDrawerFragme
         if (id == R.id.action_settings) {
             return true;
         }
-        if(id == R.id.action_add){
+        if (id == R.id.action_add) {
             createRecipe();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
-    }
-
-
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-
-        actionBar.setIcon(
-                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
-
-        int titleId = getResources().getIdentifier("action_bar_title", "id",
-                "android");
-        TextView titleText = (TextView) findViewById(titleId);
-        titleText.setTypeface(bebas);
-        titleText.setPadding(10, 0, 0, 0);
-        titleText.setTextColor(Color.WHITE);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-    }
 }
+
+
