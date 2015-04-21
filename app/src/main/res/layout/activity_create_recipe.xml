@@ -10,336 +10,289 @@
     tools:context="nu.geeks.coffeekeeper.CreateRecipe">
 
 
-    <ViewFlipper
-        android:id="@+id/viewFlipper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
-
-
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/v1"
-            >
+            android:id="@+id/createRecipeRelLayout">
 
             <Button
-                android:id="@+id/bSave1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/next"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-                />
-
-            <TextView
-                android:id="@+id/tName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="68dp"
-                android:textColor="@android:color/white"
-                android:text="Vad ska ditt recept heta?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <EditText
-                android:id="@+id/eName"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="200dp"
-                android:textColor="@android:color/white"
-                android:imeOptions="actionDone"
-                android:singleLine="true" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/v2">
-
-            <Button
-                android:id="@+id/bSave2"
-                android:layout_width="wrap_content"
-                android:background="@drawable/next"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-
-/>
-
-            <TextView
-                android:id="@+id/tComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:textColor="@android:color/white"
-                android:text="Lägg till en kommentar,\n om du vill."
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <EditText
-                android:id="@+id/eComment"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="200dp"
-                android:textColor="@android:color/white"
-                android:imeOptions="actionDone"
-                android:singleLine="true" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/v3">
-
-            <Button
-                android:id="@+id/bSave3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/next"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-            />
-
-            <TextView
-                android:id="@+id/tCoffeetype"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="68dp"
-                android:textColor="@android:color/white"
-                android:text="Vilket slags kaffe?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <EditText
-                android:id="@+id/eCoffeetype"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="200dp"
-                android:imeOptions="actionDone"
-                android:singleLine="true" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/v4">
-
-            <Button
-                android:id="@+id/bSave4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/next"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-                />
-
-            <TextView
-                android:id="@+id/tCoffeeamount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="68dp"
-                android:text="Kaffemängd? (i gram)"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <NumberPicker
-                android:id="@+id/npCoffee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="200dp" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/v5">
-
-            <Button
-                android:id="@+id/bSave5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/next"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-                />
-
-            <TextView
-                android:id="@+id/tWaterAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textColor="@android:color/white"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="68dp"
-                android:text="Vattenmängd? (i cl)"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <NumberPicker
-                android:id="@+id/npWater"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="200dp" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/v6">
-
-            <Button
-                android:id="@+id/bSave6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/next"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-            />
-
-            <TextView
-                android:id="@+id/tGrindsetting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="68dp"
-                android:text="Inställning på kaffemal?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <NumberPicker
-                android:id="@+id/npGrind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="200dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/v7">
-
-            <Button
-                android:id="@+id/bSave7"
-                android:layout_width="wrap_content"
-                android:background="@drawable/next"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-            />
-
-            <TextView
-                android:id="@+id/tTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textColor="@android:color/white"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="68dp"
-                android:text="Temperatur?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <NumberPicker
-                android:id="@+id/npTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="200dp" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/v8">
-
-            <Button
-                android:id="@+id/bSave8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/bSave"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/next"
                 android:layout_marginBottom="50dp"
-                />
 
-            <TextView
-                android:id="@+id/tBrewttimers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="50dp"
-                android:text="Ställin upp till\ntre bryggtider"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
+                android:padding="0dp" />
 
 
             <ScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scrollView"
-                android:layout_below="@+id/tBrewttimers"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="100dp">
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
 
-                    <TimePicker
+                    >
+
+                    <TextView
+                        android:id="@+id/tName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tpBrew1"
                         android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true" />
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@android:color/white"
+                        android:text="Set the name of your recipe"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
 
-                    <TimePicker
+                    <EditText
+                        android:id="@+id/eName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@android:color/white"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:hint="name" />
+
+                    <TextView
+                        android:id="@+id/tComment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="50dp"
+                        android:textColor="@android:color/white"
+                        android:text="Add a comment, if you want to."
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
+
+                    <EditText
+                        android:id="@+id/eComment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@android:color/white"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:hint="comment" />
+
+                    <TextView
+                        android:id="@+id/tCoffeetype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="50dp"
+                        android:textColor="@android:color/white"
+                        android:text="What kind of coffee?"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
+
+                    <EditText
+                        android:id="@+id/eCoffeetype"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:hint="coffe" />
+
+                    <TextView
+                        android:id="@+id/tCoffeeamount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="50dp"
+                        android:text="Set amount of coffee (in grams)"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
+
+
+                    <EditText
+                        android:id="@+id/npCoffee"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:inputType="numberDecimal"
+                        android:hint="10"
+                        android:text="10" />
+
+                    <TextView
+                        android:id="@+id/tWaterAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@android:color/white"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="50dp"
+                        android:text="Set amount of water (in cl)"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
+
+                    <EditText
+                        android:id="@+id/npWater"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:inputType="numberDecimal"
+                        android:hint="10"
+                        android:text="10" />
+
+                    <TextView
+                        android:id="@+id/tGrindsetting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="50dp"
+                        android:text="Set coffee grinder setting"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
+
+                    <EditText
+                        android:id="@+id/npGrind"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:inputType="numberDecimal"
+                        android:hint="10"
+                        android:text="10" />
+
+                    <TextView
+                        android:id="@+id/tTemp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@android:color/white"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="50dp"
+                        android:text="Set water temperature"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
+
+                    <EditText
+                        android:id="@+id/npTemp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:inputType="time"
+                        android:text="10" />
+
+                    <TextView
+                        android:id="@+id/tBrewttimers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="50dp"
+                        android:text="Set up to three \n brew times"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:layout_marginLeft="10dp" />
+
+                    <EditText
+                        android:id="@+id/tpBrew1Comment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="50dp"
+                        android:imeOptions="actionDone"
+                        android:hint="Comment for first brew time"
+                        android:singleLine="true"
+                        android:layout_marginLeft="10dp" />
+                    <EditText
+                        android:id="@+id/tpBrew1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:inputType="time"
+                        android:text="00:00" />
+
+                    <EditText
+                        android:id="@+id/tpBrew2Comment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="50dp"
+                        android:imeOptions="actionDone"
+                        android:hint="Comment for second brew time"
+                        android:singleLine="true"
+                        android:layout_marginLeft="10dp" />
+                    <EditText
                         android:id="@+id/tpBrew2"
-                        android:layout_below="@+id/tpBrew1"
-                        android:layout_centerHorizontal="true" />
-
-                    <TimePicker
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:inputType="time"
+                        android:text="00:00" />
+
+                    <EditText
+                        android:id="@+id/tpBrew3Comment"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="50dp"
+                        android:imeOptions="actionDone"
+                        android:hint="Comment for third brew time"
+                        android:singleLine="true"
+                        android:layout_marginLeft="10dp" />
+                    <EditText
                         android:id="@+id/tpBrew3"
-                        android:layout_below="@+id/timePicker"
-                        android:layout_centerHorizontal="true" />
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="10dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:inputType="time"
+                        android:text="00:00"
+                        android:paddingBottom="100dp"
+                        android:layout_marginBottom="100dp" />
 
                 </LinearLayout>
 
@@ -350,10 +303,6 @@
 
 
         </RelativeLayout>
-
-
-
-    </ViewFlipper>
 
 
 

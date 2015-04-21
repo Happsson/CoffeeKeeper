@@ -2,6 +2,7 @@ package nu.geeks.coffeekeeper;
 
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +10,8 @@ import java.util.ArrayList;
  */
 public class RecipeParser {
 
+
+    //TODO - error in parser, app hangs when saving.
 
     /**
      * Converts a recipeList to a String, to be saved on phone.
@@ -84,6 +87,7 @@ public class RecipeParser {
     public static String saveRecipe(Recipe recipe){
         String dataString = "";
         ArrayList<Integer> brewTime = recipe.getBrewTime();
+        ArrayList<String> brewComments = recipe.getBrewComments();
         //Using symbol € and % as identifiers. Not likely to be used by user.
         dataString += "€" + recipe.getName() + "€";
         dataString += "€" + recipe.getComments() + "€";
@@ -94,6 +98,9 @@ public class RecipeParser {
         dataString += "€" + brewTime.get(0) + "€";
         dataString += "€" + brewTime.get(1) + "€";
         dataString += "€" + brewTime.get(2) + "€";
+        dataString += "€" + brewComments.get(0) + "€";
+        dataString += "€" + brewComments.get(1) + "€";
+        dataString += "€" + brewComments.get(2) + "€";
         dataString += "€" + recipe.getTemp() + "€%"; //note end sign, '%'
 
         return dataString;
@@ -166,6 +173,15 @@ public class RecipeParser {
                 recipe.setBrewTime(Integer.parseInt(read));
                 break;
             case 9:
+                recipe.addBrewComments(read);
+                break;
+            case 10:
+                recipe.addBrewComments(read);
+                break;
+            case 11:
+                recipe.addBrewComments(read);
+                break;
+            case 12:
                 recipe.setTemp(Integer.parseInt(read));
                 break;
             default:

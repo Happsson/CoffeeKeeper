@@ -21,6 +21,7 @@ public class Recipe {
      int grind;
      int temp;
      ArrayList<Integer> brewTime;
+    ArrayList<String> brewComments;
     //private int totalTime;
      String kindCoffe;
      String comments;
@@ -33,7 +34,7 @@ public class Recipe {
         grind=0;
         temp=0;
         brewTime=new ArrayList<Integer>();
-      //  totalTime=0;
+        brewComments = new ArrayList<String>();
         kindCoffe=" ";
         comments=" ";
         name=" ";
@@ -108,6 +109,14 @@ public class Recipe {
 
     public ArrayList<Integer> getBrewTime(){
         return brewTime;
+    }
+
+    public void addBrewComments(String brewComments){
+        this.brewComments.add(brewComments);
+    }
+
+    public ArrayList<String> getBrewComments(){
+        return brewComments;
     }
 
     public int getTotalTime(){

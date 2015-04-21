@@ -6,7 +6,7 @@
         <ImageView
             android:id="@+id/customListImg"
             android:layout_width="30dp"
-            android:layout_height="3    0dp"
+            android:layout_height="30dp"
             />
 
         <TextView

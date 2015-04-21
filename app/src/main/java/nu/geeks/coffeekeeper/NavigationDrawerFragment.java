@@ -34,12 +34,11 @@ public class NavigationDrawerFragment extends Fragment {
 
 
 
-    String[] options = {"Favourites", "Timer", "Search", "Sort"};
+    String[] options = {"Favourites", "All recipes", "Timer"};
     int[] imageId = {
             R.drawable.fav,
-            R.drawable.timer,
-            R.drawable.search,
-            R.drawable.sort
+            R.drawable.sort,
+            R.drawable.timer
     };
 
     Typeface bebas;
